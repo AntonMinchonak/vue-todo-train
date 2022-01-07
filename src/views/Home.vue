@@ -103,18 +103,19 @@ methods: {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 10px;
 }
 
 img {
 width: 90px;
 align-self: center;
+margin-bottom: 60px;
 }
 
 select {
   padding:3px;
   align-self: start;
-  border: 1px solid rgb(192, 192, 192);
+  border: 1px solid rgb(223, 223, 223);
   padding: 5px;
   border-radius: 3px;
 }

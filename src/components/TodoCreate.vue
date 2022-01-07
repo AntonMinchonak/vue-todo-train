@@ -36,14 +36,14 @@ div {
 
 input[type="text"] {
 width: 100%;
-border:1px solid rgb(35, 158, 111);
+border:1px solid rgb(153, 230, 200);
 padding: 5px 10px;
 border-radius: 3px; 
 }
 
 input[type="text"]:focus {
   outline: none;
-  border-bottom-width: 2px;
+  border:1px solid rgb(35, 158, 111);
 }
 
 
@@ -51,6 +51,7 @@ form {
   display: flex;
   gap: 10px;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 input[type="submit"] {
