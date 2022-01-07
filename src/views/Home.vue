@@ -113,7 +113,7 @@ align-self: center;
 
 select {
   padding:3px;
-  align-self: center;
+  align-self: start;
   border: 1px solid rgb(192, 192, 192);
   padding: 5px;
   border-radius: 3px;

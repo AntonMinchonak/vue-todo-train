@@ -24,12 +24,13 @@ li {
     display: flex;
     gap: 20px;
     justify-content: space-between;
-    border: 1px solid rgb(187, 187, 187);
+    border: 1px solid rgb(209, 209, 209);
     padding: 10px;
-    border-radius: 3px;
     background: rgb(253, 253, 253);
     font-size: 18px;
     align-items:center;
+    border-left: none;
+    border-right: none;
 }
 
 .complete {
