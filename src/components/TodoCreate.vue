@@ -1,24 +1,36 @@
 <template>
-    <form>
-        <input type="text" name="" id="" v-model="value" placeholder="Дело...">
-        <input type="submit" value="Создать" @click='$emit("add-item", value)'>
-    </form>
+  <form @submit.prevent="onFormSubmit">
+    <input type="text" name="" id="" v-model="value" placeholder="Дело..." />
+    <input type="submit" value="Создать" />
+  </form>
 </template>
 
 <script>
 export default {
-    data() {
-return {
-    value:''
-}
-}
-}
+  data() {
+    return {
+      value: "",
+    };
+  },
+  methods: {
+    onFormSubmit() {
+        if (!this.value.length) return
+      let newTodo = {
+        completed: false,
+        title: this.value,
+        id: Date.now(),
+      };
+      this.$emit("add-item", newTodo);
+      this.value = "";
+    },
+  },
+};
 </script>
 
 
 
 <style scoped>
 div {
-    display: flex;
+  display: flex;
 }
 </style>
