@@ -7,7 +7,7 @@
       <option value="Completed">Completed</option>
     </select>
     <TodoCreate @add-item="createItem"/>
-    <TodoList @remover="removeTodo" :todos="filterList" />
+    <TodoList @remover="removeTodo" @changer="changeTodo" :todos="filterList" />
   </div>
 </template>
 
@@ -26,19 +26,22 @@ export default {
 return {
   todos: [
     {
-    completed: true,
+    completed: false,
     title: "SOSAT",
-    id: 1
+    id: 1,
+    order: 1
   },
   {
     completed: false,
     title: "LIZAT",
-    id: 2
+    id: 2,
+    order: 2
   },
   {
     completed: false,
     title: "SPAT",
-    id: 3
+    id: 3,
+    order: 3
   }
   ],
   filterSelected: 'All'
@@ -58,8 +61,34 @@ methods: {
   removeTodo(id) {
     this.todos = this.todos.filter(el => el.id !== id)
   },
+  changeTodo(order) {
+    let typeOfCheck= this.todos[order-1].completed
+    let insertOrder=this.todos.length-1
+    let sliced = this.todos.splice(order-1, 1)[0]
+    if (!typeOfCheck) {
+      this.todos.splice(0,0,sliced)
+      } else {
+          sliced.order=this.todos.length+1
+          this.todos.splice(insertOrder,0,sliced) 
+      }
+   for (let i=0; i<this.todos.length; i++) {
+      this.todos[i].order = i+1;
+    }
+  },
   createItem(value) {
-    this.todos.push(value)
+    let insertOrder=this.todos.length
+    value.order=insertOrder+1
+    for (let i = 0; i< this.todos.length; i++) {
+      if (this.todos[i].completed) {
+        insertOrder=i
+        value.order=insertOrder+1
+        break
+      }
+    }
+    this.todos.splice(insertOrder,0,value)
+    for (let i=0; i<this.todos.length; i++) {
+      this.todos[i].order = i+1;
+    }
   }
 }
 }
