@@ -60,6 +60,7 @@ computed: {
 methods: {
   removeTodo(id) {
     this.todos = this.todos.filter(el => el.id !== id)
+       for (let i=0; i<this.todos.length; i++)  this.todos[i].order = i+1;
   },
   changeTodo(order) {
     let typeOfCheck= this.todos[order-1].completed
@@ -96,3 +97,26 @@ methods: {
 
 </script>
 
+<style scoped>
+.home {
+  width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+img {
+width: 90px;
+align-self: center;
+}
+
+select {
+  padding:3px;
+  align-self: center;
+  border: 1px solid rgb(192, 192, 192);
+  padding: 5px;
+  border-radius: 3px;
+}
+
+</style>

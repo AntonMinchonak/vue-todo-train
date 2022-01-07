@@ -1,7 +1,7 @@
 <template>
-    <li>
-        <input type="checkbox" name="doneCheck" id="done" :checked="todo.completed" @change="changeTodoStatement">
-        <span :class="{complete:todo.completed}">{{todo.order}}. {{todo.title}}</span>
+    <li @click="changeTodoStatement" :class="{complete:todo.completed}">
+        <input type="checkbox" name="doneCheck" id="done" :checked="todo.completed" >
+        <span class="number">{{todo.order}}</span> <span>{{todo.title}}</span>
         <button @click='$emit("remove-item", todo.id)'>&times;</button>
     </li>
 </template>
@@ -23,9 +23,39 @@ export default {
 li {
     display: flex;
     gap: 20px;
-    justify-content: center;
+    justify-content: space-between;
+    border: 1px solid rgb(187, 187, 187);
+    padding: 10px;
+    border-radius: 3px;
+    background: rgb(253, 253, 253);
+    font-size: 18px;
+    align-items:center;
 }
+
 .complete {
-    text-decoration: line-through;
+    background: rgb(243, 248, 247);
+    color: rgb(90, 122, 117);
+}
+
+span {
+    margin-right: auto;
+}
+
+button {
+    background: white;
+    border: 1px solid gray;
+    width: 20px;
+    height: 20px;
+    color: red;
+    font-size: 30px;
+    line-height: 13px;
+    padding: 0;
+    border-radius: 3px;
+    text-decoration-color: rgba(255, 0, 0, 0);
+}
+.number {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 0;
 }
 </style>

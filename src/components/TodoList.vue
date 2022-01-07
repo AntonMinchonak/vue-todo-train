@@ -29,10 +29,9 @@ export default {
 <style scoped>
 ul {
     list-style: none;
-    margin: 0;
-    padding: 0;
     display: flex;
     flex-direction: column;
+    padding: 0px;
     gap: 10px; 
 }
 </style>
