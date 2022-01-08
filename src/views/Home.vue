@@ -6,7 +6,7 @@
       <option value="Incompleted">Incompleted</option>
       <option value="Completed">Completed</option>
     </select>
-    <TodoCreate @add-item="createItem"/>
+    <TodoCreate @add-item="createItem" />
     <TodoList @remover="removeTodo" @changer="changeTodo" :todos="filterList" />
   </div>
 </template>
@@ -17,84 +17,91 @@ import TodoList from "@/components/TodoList.vue";
 import TodoCreate from "@/components/TodoCreate.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-  TodoList,
-  TodoCreate
+    TodoList,
+    TodoCreate,
   },
   data() {
-return {
-  todos: [
-    {
-    completed: false,
-    title: "SOSAT",
-    id: 1,
-    order: 1
+    return {
+      todos: [
+        {
+          completed: false,
+          title: "SOSAT",
+          id: 1,
+          order: 1,
+        },
+        {
+          completed: false,
+          title: "LIZAT",
+          id: 2,
+          order: 2,
+        },
+        {
+          completed: false,
+          title: "SPAT",
+          id: 3,
+          order: 3,
+        },
+      ],
+      filterSelected: "All",
+    };
   },
-  {
-    completed: false,
-    title: "LIZAT",
-    id: 2,
-    order: 2
+  // created() {
+  //   fetch("https://jsonplaceholder.typicode.com/todos?_limit=3")
+  //     .then(res => res.json())
+  //     .then(res =>{ 
+  //       this.todos = res
+  //       for (let i=0; i<this.todos.length; i++) {
+  //         this.todos[i].order=i+1
+  //         delete this.todos[i].userId
+  //       }
+  //       }); 
+  // },
+  computed: {
+    filterList() {
+      switch (this.filterSelected) {
+        case "All":
+          return this.todos;
+        case "Incompleted":
+          return this.todos.filter((el) => !el.completed);
+        case "Completed":
+          return this.todos.filter((el) => el.completed);
+        default:
+          return this.todos;
+      }
+    },
   },
-  {
-    completed: false,
-    title: "SPAT",
-    id: 3,
-    order: 3
-  }
-  ],
-  filterSelected: 'All'
-}
-},
-computed: {
-  filterList() {
-    switch (this.filterSelected) {
-      case "All" : return this.todos
-      case "Incompleted":  return this.todos.filter(el => !el.completed)
-      case "Completed":  return this.todos.filter(el => el.completed)
-      default: return this.todos
-    }
-    }
-  },
-methods: {
-  removeTodo(id) {
-    this.todos = this.todos.filter(el => el.id !== id)
-       for (let i=0; i<this.todos.length; i++)  this.todos[i].order = i+1;
-  },
-  changeTodo(order) {
-    let typeOfCheck= this.todos[order-1].completed
-    let insertOrder=this.todos.length-1
-    let sliced = this.todos.splice(order-1, 1)[0]
-    if (!typeOfCheck) {
-      this.todos.splice(0,0,sliced)
+  methods: {
+    removeTodo(id) {
+      this.todos = this.todos.filter((el) => el.id !== id);
+      for (let i = 0; i < this.todos.length; i++) this.todos[i].order = i + 1;
+    },
+    changeTodo(order) {
+      let typeOfCheck = this.todos[order - 1].completed;
+      let sliced = this.todos.splice(order - 1, 1)[0];
+      if (!typeOfCheck) {
+        this.todos.splice(0, 0, sliced);
       } else {
-          sliced.order=this.todos.length+1
-          this.todos.splice(insertOrder,0,sliced) 
+        this.todos.splice(this.todos.length, 0, sliced);
       }
-   for (let i=0; i<this.todos.length; i++) {
-      this.todos[i].order = i+1;
-    }
+      for (let i = 0; i < this.todos.length; i++) this.todos[i].order = i + 1;
+    },
+    createItem(value) {
+      let insertOrder = this.todos.length;
+      value.order = insertOrder + 1;
+      for (let i = 0; i < this.todos.length; i++) {
+        if (this.todos[i].completed) {
+          insertOrder = i;
+          value.order = insertOrder + 1;
+          break;
+        }
+      }
+      this.todos.splice(insertOrder, 0, value);
+      for (let i = 0; i < this.todos.length; i++) this.todos[i].order = i + 1;
+    },
   },
-  createItem(value) {
-    let insertOrder=this.todos.length
-    value.order=insertOrder+1
-    for (let i = 0; i< this.todos.length; i++) {
-      if (this.todos[i].completed) {
-        insertOrder=i
-        value.order=insertOrder+1
-        break
-      }
-    }
-    this.todos.splice(insertOrder,0,value)
-    for (let i=0; i<this.todos.length; i++) {
-      this.todos[i].order = i+1;
-    }
-  }
-}
-}
-
-
+};
 </script>
 
 <style scoped>
@@ -107,17 +114,16 @@ methods: {
 }
 
 img {
-width: 90px;
-align-self: center;
-margin-bottom: 60px;
+  width: 90px;
+  align-self: center;
+  margin-bottom: 60px;
 }
 
 select {
-  padding:3px;
+  padding: 3px;
   align-self: start;
   border: 1px solid rgb(223, 223, 223);
   padding: 5px;
   border-radius: 3px;
 }
-
 </style>

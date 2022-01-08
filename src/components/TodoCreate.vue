@@ -63,4 +63,8 @@ font-size: 16px;
 font-weight: bold;
 border-radius: 3px;
 }
+
+input[type="submit"]:active {
+background: rgb(22, 100, 70);
+}
 </style>

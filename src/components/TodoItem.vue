@@ -24,7 +24,7 @@ li {
     display: flex;
     gap: 20px;
     justify-content: space-between;
-    border: 1px solid rgb(209, 209, 209);
+    border: 1px solid rgb(223, 223, 223);
     padding: 10px;
     background: rgb(253, 253, 253);
     font-size: 18px;
@@ -53,10 +53,16 @@ button {
     padding: 0;
     border-radius: 3px;
     text-decoration-color: rgba(255, 0, 0, 0);
+    transition: 0.3s ease-in-out;
 }
 .number {
     font-size: 16px;
     font-weight: bold;
     margin-right: 0;
+}
+
+button:active {
+    width: 30px;
+    height: 30px;
 }
 </style>
