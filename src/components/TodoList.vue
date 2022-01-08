@@ -3,6 +3,7 @@
         <ul>
             <TodoItem @remove-item="removeTodo" @change-todo="changeTodo" v-for="todo in todos" :key="todo.id" :todo="todo"/>
         </ul>
+        <p v-if="todos.length===0">Список задач пуст. Наконец-то ты свободен.</p>
     </div>
 </template>
 

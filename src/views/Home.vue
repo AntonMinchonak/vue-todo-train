@@ -25,39 +25,39 @@ export default {
   data() {
     return {
       todos: [
-        {
-          completed: false,
-          title: "SOSAT",
-          id: 1,
-          order: 1,
-        },
-        {
-          completed: false,
-          title: "LIZAT",
-          id: 2,
-          order: 2,
-        },
-        {
-          completed: false,
-          title: "SPAT",
-          id: 3,
-          order: 3,
-        },
+        // {
+        //   completed: false,
+        //   title: "SOSAT",
+        //   id: 1,
+        //   order: 1,
+        // },
+        // {
+        //   completed: false,
+        //   title: "LIZAT",
+        //   id: 2,
+        //   order: 2,
+        // },
+        // {
+        //   completed: false,
+        //   title: "SPAT",
+        //   id: 3,
+        //   order: 3,
+        // },
       ],
       filterSelected: "All",
     };
   },
-  // created() {
-  //   fetch("https://jsonplaceholder.typicode.com/todos?_limit=3")
-  //     .then(res => res.json())
-  //     .then(res =>{ 
-  //       this.todos = res
-  //       for (let i=0; i<this.todos.length; i++) {
-  //         this.todos[i].order=i+1
-  //         delete this.todos[i].userId
-  //       }
-  //       }); 
-  // },
+  created() {
+    fetch("https://jsonplaceholder.typicode.com/todos?_limit=3")
+      .then((res) => res.json())
+      .then((res) => {
+        for (let i = 0; i < res.length; i++) {
+          res[i].order = i + 1;
+          delete res[i].userId;
+        }
+        this.todos = res;
+      });
+  },
   computed: {
     filterList() {
       switch (this.filterSelected) {
@@ -85,7 +85,9 @@ export default {
       } else {
         this.todos.splice(this.todos.length, 0, sliced);
       }
-      for (let i = 0; i < this.todos.length; i++) this.todos[i].order = i + 1;
+      for (let i = 0; i < this.todos.length; i++) {
+        this.todos[i].order = i + 1;
+      }
     },
     createItem(value) {
       let insertOrder = this.todos.length;
