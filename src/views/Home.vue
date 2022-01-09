@@ -7,7 +7,7 @@
       <option value="Completed">Completed</option>
     </select>
     <TodoCreate @add-item="createItem" />
-    <TodoList @remover="removeTodo" @changer="changeTodo" :todos="filterList" />
+    <TodoList @remover="removeTodo" @changer="changeTodo" :todos="allTodos" />
   </div>
 </template>
 
@@ -15,6 +15,7 @@
 // @ is an alias to /src
 import TodoList from "@/components/TodoList.vue";
 import TodoCreate from "@/components/TodoCreate.vue";
+import {mapGetters} from 'vuex';
 
 export default {
   name: "Home",
@@ -47,18 +48,11 @@ export default {
       filterSelected: "All",
     };
   },
-  created() {
-    fetch("https://jsonplaceholder.typicode.com/todos?_limit=3")
-      .then((res) => res.json())
-      .then((res) => {
-        for (let i = 0; i < res.length; i++) {
-          res[i].order = i + 1;
-          delete res[i].userId;
-        }
-        this.todos = res;
-      });
+  mounted() {
+      this.$store.dispatch("retriveTodos")
   },
   computed: {
+    ...mapGetters(['allTodos']),
     filterList() {
       switch (this.filterSelected) {
         case "All":
@@ -74,8 +68,8 @@ export default {
   },
   methods: {
     removeTodo(id) {
-      this.todos = this.todos.filter((el) => el.id !== id);
-      for (let i = 0; i < this.todos.length; i++) this.todos[i].order = i + 1;
+      this.allTodos = this.allTodos.filter((el) => el.id !== id);
+      for (let i = 0; i < this.allTodos.length; i++) this.allTodos[i].order = i + 1;
     },
     changeTodo(order) {
       let typeOfCheck = this.todos[order - 1].completed;
