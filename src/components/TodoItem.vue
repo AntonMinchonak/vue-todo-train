@@ -2,17 +2,21 @@
     <li @click="changeTodoStatement" :class="{complete:todo.completed}">
         <input type="checkbox" name="doneCheck" id="done" :checked="todo.completed" >
         <span class="number">{{todo.order}}</span> <span>{{todo.title}}</span>
-        <button @click='$emit("remove-item", todo.id)'>&times;</button>
+        <button @click="removeTodo">&times;</button>
     </li>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
    props: ["todo"],
    methods: {
-       changeTodoStatement() {
-            this.todo.completed = !this.todo.completed
-            this.$emit("change-todo", this.todo.order)
+       ...mapMutations(['deleteTodo', 'changeTodoStatementStore']),
+       changeTodoStatement(event) {
+            if(event.target.tagName!=='BUTTON') this.changeTodoStatementStore(this.todo.order)
+       },
+       removeTodo() {
+           this.deleteTodo(this.todo.id)
        }
    }
 }

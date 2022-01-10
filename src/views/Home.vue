@@ -6,8 +6,8 @@
       <option value="Incompleted">Incompleted</option>
       <option value="Completed">Completed</option>
     </select>
-    <TodoCreate @add-item="createItem" />
-    <TodoList @remover="removeTodo" @changer="changeTodo" :todos="allTodos" />
+    <TodoCreate />
+    <TodoList  @changer="changeTodo" :todos="allTodos" />
   </div>
 </template>
 
@@ -64,37 +64,6 @@ export default {
         default:
           return this.todos;
       }
-    },
-  },
-  methods: {
-    removeTodo(id) {
-      this.allTodos = this.allTodos.filter((el) => el.id !== id);
-      for (let i = 0; i < this.allTodos.length; i++) this.allTodos[i].order = i + 1;
-    },
-    changeTodo(order) {
-      let typeOfCheck = this.todos[order - 1].completed;
-      let sliced = this.todos.splice(order - 1, 1)[0];
-      if (!typeOfCheck) {
-        this.todos.splice(0, 0, sliced);
-      } else {
-        this.todos.splice(this.todos.length, 0, sliced);
-      }
-      for (let i = 0; i < this.todos.length; i++) {
-        this.todos[i].order = i + 1;
-      }
-    },
-    createItem(value) {
-      let insertOrder = this.todos.length;
-      value.order = insertOrder + 1;
-      for (let i = 0; i < this.todos.length; i++) {
-        if (this.todos[i].completed) {
-          insertOrder = i;
-          value.order = insertOrder + 1;
-          break;
-        }
-      }
-      this.todos.splice(insertOrder, 0, value);
-      for (let i = 0; i < this.todos.length; i++) this.todos[i].order = i + 1;
     },
   },
 };
