@@ -15,7 +15,9 @@ export default {
   },
   methods: {
     ...mapMutations(['onFormSubmitStore']),
+    
     onFormSubmit() {
+      if(this.value) {
        this.onFormSubmitStore({
         completed: false,
         title: this.value,
@@ -23,6 +25,7 @@ export default {
         order: 0
        })
        this.value=''
+    }
     },
   }
   }
@@ -67,5 +70,9 @@ border-radius: 3px;
 
 input[type="submit"]:active {
 background: rgb(22, 100, 70);
+}
+
+input[type="submit"]:hover {
+cursor: pointer;
 }
 </style>

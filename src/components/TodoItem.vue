@@ -28,13 +28,19 @@ li {
     display: flex;
     gap: 20px;
     justify-content: space-between;
-    border: 1px solid rgb(223, 223, 223);
+    border: 1px solid rgb(200, 255, 243);
     padding: 10px;
-    background: rgb(253, 253, 253);
     font-size: 18px;
     align-items:center;
-    border-left: none;
+    border-top: none;
     border-right: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+ 
+}
+
+li:hover {
+background: rgb(250, 255, 253);
 }
 
 .complete {
@@ -44,11 +50,13 @@ li {
 
 span {
     margin-right: auto;
+       overflow: hidden;
+       text-align: start;
 }
 
 button {
     background: white;
-    border: 1px solid gray;
+    border: 1px solid rgb(255, 126, 126);
     width: 20px;
     height: 20px;
     color: red;
@@ -58,6 +66,7 @@ button {
     border-radius: 3px;
     text-decoration-color: rgba(255, 0, 0, 0);
     transition: 0.3s ease-in-out;
+    cursor: pointer;
 }
 .number {
     font-size: 16px;
@@ -68,5 +77,13 @@ button {
 button:active {
     width: 30px;
     height: 30px;
+   
 }
+
+button:hover {
+   background: red;
+    color: white;
+    border: none;
+}
+
 </style>
