@@ -1,7 +1,7 @@
 export default {
   actions: {
     retriveTodos(ctx) {
-      fetch("https://jsonplaceholder.typicode.com/todos?_limit=50")
+      fetch("https://jsonplaceholder.typicode.com/todos?_limit=11")
         .then((res) => res.json())
         .then((res) => {
           let completedList = res.filter((el) => el.completed);
