@@ -24,13 +24,14 @@ li {
     display: flex;
     gap: 20px;
     justify-content: space-between;
-    border: 1px solid rgb(223, 223, 223);
+    border: 1px solid rgb(138, 229, 217);
     padding: 10px;
     background: rgb(253, 253, 253);
     font-size: 18px;
     align-items:center;
-    border-left: none;
-    border-right: none;
+    border-top: none;
+    border-bottom: none;
+    overflow:hidden;
 }
 
 .complete {
@@ -40,6 +41,7 @@ li {
 
 span {
     margin-right: auto;
+
 }
 
 button {
