@@ -1,14 +1,20 @@
 export default {
   actions: {
     retriveTodos(ctx) {
-      fetch("https://jsonplaceholder.typicode.com/todos?_limit=3")
+      fetch("https://jsonplaceholder.typicode.com/todos?_limit=50")
         .then((res) => res.json())
         .then((res) => {
-          for (let i = 0; i < res.length; i++) {
-            res[i].order = i + 1;
-            delete res[i].userId;
-          }
-          const todos = res;
+          let completedList = res.filter((el) => el.completed);
+          let uncompletedList = res.filter((el) => !el.completed);
+          //   uncompletedList= uncompletedList.concat(completedList);
+          let preTodos = [...uncompletedList, ...completedList];
+          //   for (let i = 0; i < preTodos.length; i++) {
+          //     preTodos[i].order=i+1;
+          //   }
+          preTodos.forEach((el, index) => {
+            preTodos[index].order = index + 1;
+          });
+          const todos = [...uncompletedList, ...completedList];
           ctx.commit("updateTodos", todos);
         });
     },
@@ -36,6 +42,9 @@ export default {
       }
       for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
     },
+    filterList(state, filter) {
+      state.filter = filter;
+    },
   },
   state: {
     todos: [],
@@ -43,25 +52,16 @@ export default {
   },
   getters: {
     allTodos(state) {
-      console.log("sdaaaaaaaaaaaa");
-      switch (state.filterSelected) {
-        case "All": {
-          console.log("All");
+      switch (state.filter) {
+        case "All":
           return state.todos;
-        }
-        case "Incompleted": {
-          console.log("In");
+        case "Incompleted":
           return state.todos.filter((el) => !el.completed);
-        }
         case "Completed":
           return state.todos.filter((el) => el.completed);
         default:
           return state.todos;
       }
-      //   return state.todos;
     },
-      filterSelected(state) {
-          return state.filter;
-    }
   },
 };

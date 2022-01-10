@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <select name="" id="" v-model="filterSelected">
+    <select name="" id="" v-model="filterHome" @change="changeFilter">
       <option value="All">All</option>
       <option value="Incompleted">Incompleted</option>
       <option value="Completed">Completed</option>
@@ -12,62 +12,31 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import TodoList from "@/components/TodoList.vue";
 import TodoCreate from "@/components/TodoCreate.vue";
-import {mapGetters} from 'vuex';
+import {mapGetters, mapMutations} from 'vuex';
 
 export default {
   name: "Home",
+  data() {
+    return { filterHome: 'All' }
+  },
   components: {
     TodoList,
     TodoCreate,
-  },
-  data() {
-    return {
-      // todos: [
-      //   // {
-      //   //   completed: false,
-      //   //   title: "SOSAT",
-      //   //   id: 1,
-      //   //   order: 1,
-      //   // },
-      //   // {
-      //   //   completed: false,
-      //   //   title: "LIZAT",
-      //   //   id: 2,
-      //   //   order: 2,
-      //   // },
-      //   // {
-      //   //   completed: false,
-      //   //   title: "SPAT",
-      //   //   id: 3,
-      //   //   order: 3,
-      //   // },
-      // ],
-      // filterSelected: "All",
-    };
-
   },
   mounted() {
       this.$store.dispatch("retriveTodos")
   },
   computed: {
-    ...mapGetters(['allTodos','filterSelected']),
-  
-    // filterList() {
-    //   switch (this.filterSelected) {
-    //     case "All":
-    //       return this.todos;
-    //     case "Incompleted":
-    //       return this.todos.filter((el) => !el.completed);
-    //     case "Completed":
-    //       return this.todos.filter((el) => el.completed);
-    //     default:
-    //       return this.todos;
-    //   }
-    // },
+    ...mapGetters(['allTodos']),
   },
+  methods: {
+    ...mapMutations(['filterList']),
+    changeFilter () {
+      this.filterList(this.filterHome)
+    }
+  }
 };
 </script>
 
