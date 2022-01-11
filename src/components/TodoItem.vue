@@ -1,25 +1,36 @@
 <template>
     <li @click="changeTodoStatement" :class="{complete:todo.completed}">
-        <input type="checkbox" name="doneCheck" id="done" :checked="todo.completed" >
-        <span class="number">{{todo.order}}</span> <span>{{todo.title}}</span>
-        <button @click="removeTodo">&times;</button>
+        <input type="checkbox" name="doneCheck" id="done" :checked="todo.completed" :disabled="!edit">
+        <span class="number">{{todo.order}}</span><input class="title" :class="{complete:todo.completed}" type="text" name="" v-model="todo.title" :disabled="edit" ref="tit">
+        <button class="pen" @click="editTitle"><img src="../assets/pen.svg" alt="" ></button>
+        <button class="remove" @click="removeTodo">&times;</button>
     </li>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
+
 export default {
+    data() {
+        return {edit:true}
+    },
    props: ["todo"],
    methods: {
        ...mapMutations(['deleteTodo', 'changeTodoStatementStore']),
        changeTodoStatement(event) {
-            if(event.target.tagName!=='BUTTON') this.changeTodoStatementStore(this.todo.order)
+            if(event.target.tagName!=='BUTTON'&&event.target.tagName!=='IMG'&&event.target.disabled) this.changeTodoStatementStore(this.todo.order)
        },
        removeTodo() {
            this.deleteTodo(this.todo.id)
+       },
+       editTitle() {
+           this.edit=!this.edit  
+           
        }
    }
 }
+
+
 </script>
 
 
@@ -42,6 +53,8 @@ li {
 li:hover {
 background: rgb(250, 255, 253);
 }
+
+
 
 .complete {
     background: rgb(243, 248, 247);
@@ -77,7 +90,6 @@ button {
 button:active {
     width: 30px;
     height: 30px;
-   
 }
 
 button:hover {
@@ -86,4 +98,41 @@ button:hover {
     border: none;
 }
 
+.pen {
+    border-color: rgb(35, 158, 111);
+    width: 25px;
+    height: 20px;
+    background: white;
+}
+
+.pen:hover {
+background: rgb(5, 36, 33);
+}
+
+.pen:active {
+    width: 25px;
+    height: 20px;
+}
+
+input[disabled] {
+background: none;
+font-weight: 400;
+border:none;
+}
+
+.title {
+  border: 1px solid rgb(191, 255, 230);;
+    margin-right: auto;
+    font-size: 18px;
+    width: 100%;
+    font-weight: 600;
+}
+
+.title:focus {
+    outline: none;
+}
+
+.number {
+    padding: 0 3px;
+}
 </style>
