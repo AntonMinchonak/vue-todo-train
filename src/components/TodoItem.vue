@@ -1,138 +1,172 @@
 <template>
-    <li @click="changeTodoStatement" :class="{complete:todo.completed}">
-        <input type="checkbox" name="doneCheck" id="done" :checked="todo.completed" :disabled="!edit">
-        <span class="number">{{todo.order}}</span><input class="title" :class="{complete:todo.completed}" type="text" name="" v-model="todo.title" :disabled="edit" ref="tit">
-        <button class="pen" @click="editTitle"><img src="../assets/pen.svg" alt="" ></button>
-        <button class="remove" @click="removeTodo">&times;</button>
-    </li>
+  <li @click="changeTodoStatement" :class="{ complete: todo.completed }">
+    <input
+      class="checkbox"
+      type="checkbox"
+      name="doneCheck"
+      id="done"
+      :checked="todo.completed"
+      :disabled="!isEdit"
+    />
+    <span class="number" v-if="!todo.completed">{{ todo.order }}</span>
+    <span class="check" v-if="todo.completed">&#10003;</span>
+    <input
+      class="title"
+      :class="{ complete: todo.completed }"
+      v-model="todo.title"
+      :disabled="isEdit"
+      ref="tit"
+      @keydown="keyHandle"
+    />
+    <button class="pen" @click="editTitle">
+      <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span v-if="!isEdit"
+        >&#10003;</span
+      >
+    </button>
+    <button class="remove" @click="removeTodo">&times;</button>
+  </li>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
 
 export default {
-    data() {
-        return {edit:true}
+  data() {
+    return { isEdit: true };
+  },
+  props: ["todo"],
+  methods: {
+    ...mapMutations(["deleteTodo", "changeTodoStatementStore"]),
+    changeTodoStatement(event) {
+      if (event.target.classList.contains("checkbox"))
+        this.changeTodoStatementStore(this.todo.order);
+      if (
+        event.target.tagName !== "BUTTON" &&
+        event.target.tagName !== "IMG" &&
+        event.target.disabled
+      )
+        this.changeTodoStatementStore(this.todo.order);
     },
-   props: ["todo"],
-   methods: {
-       ...mapMutations(['deleteTodo', 'changeTodoStatementStore']),
-       changeTodoStatement(event) {
-            if(event.target.tagName!=='BUTTON'&&event.target.tagName!=='IMG'&&event.target.disabled) this.changeTodoStatementStore(this.todo.order)
-       },
-       removeTodo() {
-           this.deleteTodo(this.todo.id)
-       },
-       editTitle() {
-           this.edit=!this.edit  
-           
-       }
-   }
-}
-
-
+    removeTodo() {
+      this.deleteTodo(this.todo.id);
+    },
+    editTitle() {
+      this.isEdit = !this.isEdit;
+    },
+    keyHandle(event) {
+      if (event.keyCode === 13) this.editTitle();
+    },
+  },
+};
 </script>
 
 
 <style scoped>
 li {
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
-    border: 1px solid rgb(200, 255, 243);
-    padding: 10px;
-    font-size: 18px;
-    align-items:center;
-    border-top: none;
-    border-right: none;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
- 
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  border: 1px solid rgb(200, 255, 243);
+  padding: 10px;
+  font-size: 18px;
+  align-items: center;
+  border-top: none;
+  border-right: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
 }
 
 li:hover {
-background: rgb(250, 255, 253);
+  background: rgb(250, 255, 253);
 }
 
-
-
 .complete {
-    background: rgb(243, 248, 247);
-    color: rgb(90, 122, 117);
+  background: rgb(243, 248, 247);
+  color: rgb(90, 122, 117);
 }
 
 span {
-    margin-right: auto;
-       overflow: hidden;
-       text-align: start;
+  margin-right: auto;
+  overflow: hidden;
+  text-align: start;
 }
 
 button {
-    background: white;
-    border: 1px solid rgb(255, 126, 126);
-    width: 20px;
-    height: 20px;
-    color: red;
-    font-size: 30px;
-    line-height: 13px;
-    padding: 0;
-    border-radius: 3px;
-    text-decoration-color: rgba(255, 0, 0, 0);
-    transition: 0.3s ease-in-out;
-    cursor: pointer;
+  background: white;
+  border: 1px solid rgb(255, 126, 126);
+  width: 20px;
+  height: 20px;
+  color: red;
+  font-size: 30px;
+  line-height: 13px;
+  padding: 0;
+  border-radius: 3px;
+  text-decoration-color: rgba(255, 0, 0, 0);
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
 }
 .number {
-    font-size: 16px;
-    font-weight: bold;
-    margin-right: 0;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 0;
 }
 
 button:active {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 button:hover {
-   background: red;
-    color: white;
-    border: none;
+  background: red;
+  color: white;
 }
 
 .pen {
-    border-color: rgb(35, 158, 111);
-    width: 25px;
-    height: 20px;
-    background: white;
+  border-color: rgb(35, 158, 111);
+  width: 20px;
+  height: 20px;
+  background: white;
+  color: rgb(35, 158, 111);
+  font-size: 16px;
+  vertical-align: center;
+  line-height: 21px;
+  transition: 0.2 ease-in-out;
 }
 
 .pen:hover {
-background: rgb(5, 36, 33);
+  background: rgb(4, 41, 27);
 }
 
 .pen:active {
-    width: 25px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 input[disabled] {
-background: none;
-font-weight: 400;
-border:none;
+  background: none;
+  font-weight: 400;
+  border: none;
+  font-size: 18px;
+  color: rgb(15, 29, 32);
 }
 
 .title {
-  border: 1px solid rgb(191, 255, 230);;
-    margin-right: auto;
-    font-size: 18px;
-    width: 100%;
-    font-weight: 600;
+  border: 1px solid rgb(191, 255, 230);
+  margin-right: auto;
+  font-size: 16px;
+  flex-grow:1;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px;
+  color: rgb(46, 56, 58);
 }
 
 .title:focus {
-    outline: none;
+  outline: none;
+  cursor: text;
 }
 
 .number {
-    padding: 0 3px;
+  padding: 0 3px;
 }
 </style>

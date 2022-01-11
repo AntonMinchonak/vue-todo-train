@@ -1,8 +1,11 @@
+import axios from 'axios'
+
 export default {
   actions: {
     retriveTodos(ctx) {
-      fetch("https://jsonplaceholder.typicode.com/todos?_limit=11")
-        .then((res) => res.json())
+      axios
+        .get("https://jsonplaceholder.typicode.com/todos?_limit=11")
+        .then((res) => res.data)
         .then((res) => {
           let completedList = res.filter((el) => el.completed);
           let uncompletedList = res.filter((el) => !el.completed);
@@ -16,6 +19,10 @@ export default {
           });
           const todos = [...uncompletedList, ...completedList];
           ctx.commit("updateTodos", todos);
+          setTimeout(() => {
+             ctx.commit("updateIsLoaded");
+          }, 1000);
+         
         });
     },
   },
@@ -45,10 +52,14 @@ export default {
     filterList(state, filter) {
       state.filter = filter;
     },
+    updateIsLoaded(state) {
+      state.isLoaded = true
+    }
   },
   state: {
     todos: [],
     filter: "All",
+    isLoaded: false
   },
   getters: {
     allTodos(state) {
@@ -63,5 +74,8 @@ export default {
           return state.todos;
       }
     },
+    getLoad(state) {
+      return state.isLoaded
+    }
   },
 };

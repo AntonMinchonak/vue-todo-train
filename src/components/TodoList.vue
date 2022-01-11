@@ -1,20 +1,25 @@
 <template>
     <div>
-        <ul>
-            <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo"/>
+       <Spinner v-if="!getLoad" />
+        <ul v-else>
+            <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" />
         </ul>
-        <p v-if="todos.length===0">Список задач пуст. Наконец-то ты свободен.</p>
+        <p v-if="!todos.length">Список задач пуст. Наконец-то ты свободен.</p>
     </div>
 </template>
 
 <script>
 import TodoItem from '@/components/TodoItem.vue'
+import Spinner from '@/components/Spinner.vue'
+import { mapGetters } from "vuex";
 
 export default {
+  computed: mapGetters(['getLoad']),
   components: {
-    TodoItem
+    TodoItem,
+    Spinner
   },
-  props: ["todos"]
+  props: ["todos"],
 }
 </script>
 
