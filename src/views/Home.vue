@@ -25,9 +25,6 @@ export default {
     TodoList,
     TodoCreate,
   },
-  mounted() {
-      this.$store.dispatch("retriveTodos")
-  },
   computed: {
     ...mapGetters(['allTodos']),
   },

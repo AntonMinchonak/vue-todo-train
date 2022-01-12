@@ -8,6 +8,16 @@
   </div>
 </template>
 
+<script>
+
+export default {
+ mounted() {
+      this.$store.dispatch("retriveTodos")
+  },
+}
+</script>
+
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

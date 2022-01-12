@@ -16,7 +16,7 @@
       v-model="todo.title"
       :disabled="isEdit"
       ref="tit"
-      @keydown="keyHandle"
+      @keyup.enter="editTitle"
     />
     <button class="pen" @click="editTitle">
       <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span v-if="!isEdit"
@@ -52,9 +52,6 @@ export default {
     },
     editTitle() {
       this.isEdit = !this.isEdit;
-    },
-    keyHandle(event) {
-      if (event.keyCode === 13) this.editTitle();
     },
   },
 };
