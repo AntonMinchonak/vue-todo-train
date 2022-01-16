@@ -30,6 +30,7 @@ ul {
     display: flex;
     flex-wrap: wrap;
     padding: 0px;
-    gap: 10px; 
+    gap: 20px; 
+    margin: 0;
 }
 </style>

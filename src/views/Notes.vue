@@ -5,7 +5,7 @@
       <option value="Incompleted">Incompleted</option>
       <option value="Completed">Completed</option>
     </select>
-    <router-link class="link" to="/note-create"><button>Create Note</button></router-link>
+    <router-link class="link" to="/note-create"><button><span>+</span>Create Note </button></router-link>
     <NoteList :notes="allNotes" />
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
          }
   },
   mounted() {
-      this.$store.dispatch("retriveNotes")
+      // this.$store.dispatch("retriveNotes")
   },
   components: {
     NoteList,
@@ -49,6 +49,13 @@ export default {
 }
 
 
+span {
+font-size: 40px;
+line-height: 20px;
+vertical-align: bottom;
+margin-right: 5px;
+}
+
 select {
   padding: 3px;
   align-self: start;
@@ -58,12 +65,14 @@ select {
 }
 
 button {
-  padding: 10px;
+  padding: 10px 15px;
   background: rgb(35, 158, 111);
   border: none;
   color: white;
   font-weight: 600;
- 
+ border-radius:3px ;
+ font-size: 16px;
+ margin-bottom: 20px;
 }
 
 .link {

@@ -1,19 +1,39 @@
 <template>
   <li>
     <input class="title" v-model="note.title" disabled />
-    <input class="body" v-model="note.body" disabled />
-    <button class="pen" @click="editTitle">
+    <textarea @input="resize" ref="area"  :rows="note.body.length/23" class="body" v-model="note.body" disabled />
+    <div class="timedate">
+      <div >{{note.date}}</div>
+      <div >{{note.time}}</div>
+    </div>
+    <!-- <button class="pen" @click="editTitle">
       <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span v-if="!isEdit">&#10003;</span>
     </button>
-    <button class="remove" @click="removeTodo">&times;</button>
+    <button class="remove" @click="removeTodo">&times;</button> -->
   </li>
 </template>
 
 <script>
 
 export default {
+  // data() {
+  //   return {
+      
+  //   }
+  // }
   props: ["note"],
-};
+
+  methods: {
+    resize() {
+      this.$refs.area.rows=1
+    }
+  },
+  mounted: {
+    res() {
+      this.$refs.area.style.height="100px"
+    }
+  }
+}
 </script>
 
 
@@ -21,17 +41,28 @@ export default {
 li {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  justify-content: space-between;
+  gap: 15px;
+  width: 369px;
   border: 1px solid rgb(200, 255, 243);
   padding: 10px;
   font-size: 18px;
-  align-items: center;
   border-top: none;
   border-right: none;
   cursor: pointer;
   transition: 0.2s ease-in-out;
 }
+
+textarea:disabled {
+border:none;
+border-radius: 3px; 
+vertical-align: top;
+resize: none;
+font-family: sans-serif;
+font-size: 18px;
+background: none;
+overflow: hidden;
+}
+
 
 li:hover {
   background: rgb(250, 255, 253);
@@ -111,11 +142,16 @@ input[disabled] {
   border: 1px solid rgb(191, 255, 230);
   margin-right: auto;
   font-size: 16px;
-  flex-grow:1;
   font-weight: 600;
   cursor: pointer;
   padding: 4px;
   color: rgb(46, 56, 58);
+}
+
+.title:disabled {
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .title:focus {
@@ -126,4 +162,14 @@ input[disabled] {
 .number {
   padding: 0 3px;
 }
+
+.timedate {
+  margin-top: auto;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  color: rgb(140, 165, 159);
+}
+
+
 </style>

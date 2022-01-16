@@ -1,9 +1,13 @@
 <template>
  <form @submit.prevent="onFormSubmit">
-    <router-link class="back" to="/note-create"><button>&#8592;</button></router-link>
-    <input type="date" name="" id="" v-model="date" />
-    <input type="time" name="" id="" v-model="time" />
-    <router-link class="link" :to="link"><input type="submit" value="Далее" @click="onFormSubmit"/></router-link>
+    <router-link class="back" to="/note-date"><button>&#8592;</button></router-link>
+    <label for="important">Укажите важность заметки:</label>
+    <select name="" id="important" v-model="importance">
+        <option value="1">Очень важно</option>
+        <option value="2">Средневажно</option>
+         <option value="3">Маловажно</option>
+    </select>
+    <router-link class="link" :to="link"><input type="submit" value="Создать заметку" @click="onFormSubmit" /></router-link>
     
   </form>
 </template>
@@ -14,22 +18,19 @@ import {mapMutations} from "vuex"
 export default {
     data() {
         return {
-            date:"",
-            time:"",
-            link:""
+            importance:"",
+            link: ""
         }
     },
 methods: {
-    ...mapMutations(['newNoteDate']),
+    ...mapMutations(['newNoteImportance']),
     onFormSubmit() {
-        if(this.date&&this.time) {
-            this.link="/note-importance"
-        this.newNoteDate({
-            date: this.date,
-            time: this.time,
-        
+        if (this.importance) {
+            this.link = "/notes"
+        this.newNoteImportance({
+            importance: this.importance,
         })
-    }
+        }
     }
 }
 }
@@ -44,6 +45,10 @@ form {
   margin-bottom: 20px;
   width: 800px;
   margin: 0 auto;
+}
+
+label {
+    margin-right: auto;
 }
 
 input[type="submit"] {
@@ -77,11 +82,11 @@ button {
   font-size: 20px;
   padding: 0 20px 4px ;
   border-radius: 3px;
-    margin-bottom: 20px;
-    cursor: pointer;
+  margin-bottom: 20px;
+  cursor: pointer;
 }
 
-input:not([type="submit"]) {
+select {
     padding: 10px;
 }
 </style>

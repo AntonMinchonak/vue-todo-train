@@ -3,7 +3,7 @@
     <router-link class="back" to="/notes"><button>&#8592;</button></router-link>
     <input type="text" name="" id="" v-model="value" placeholder="Дело..." />
     <textarea type="textarea" name="" id="" v-model="valueNote" placeholder="Текст заметки..." />
-    <router-link class="link" to="/note-date"><input type="submit" value="Далее" /></router-link>
+    <router-link class="link" :to="link" ><input type="submit" value="Далее" @click="onFormSubmit" /></router-link>
     
   </form>
 </template>
@@ -14,23 +14,23 @@ export default {
   data() {
     return {
       value: "",
-      valueNote: ""
+      valueNote: "",
+      link:""
     };
   },
-  props:['notes'],
   methods: {
-    ...mapMutations(['onFormSubmitStore']),
+    ...mapMutations(['newNoteCreate']),
     
     onFormSubmit() {
-      if(this.value) {
-       this.onFormSubmitStore({
-        completed: false,
+       console.log(this.value)
+      if(this.value&&this.valueNote) {
+       this.link="/note-date"
+       this.newNoteCreate({
         title: this.value,
         body: this.valueNote,
-        id: Date.now(),
-        order: 0
        })
        this.value=''
+        this.valueNote=''
     }
     },
   }
@@ -100,7 +100,7 @@ cursor: pointer;
 
 .back {
   margin-right: auto;
-  
+  cursor: pointer;
 }
 
 button {
@@ -111,6 +111,7 @@ button {
   padding: 0 20px 4px ;
   border-radius: 3px;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 </style>
