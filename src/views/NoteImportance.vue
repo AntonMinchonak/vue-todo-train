@@ -29,6 +29,7 @@ methods: {
             this.link = "/notes"
         this.newNoteImportance({
             importance: this.importance,
+            id: Date.now()
         })
         }
     }
