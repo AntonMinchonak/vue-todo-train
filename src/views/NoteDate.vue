@@ -1,15 +1,15 @@
 <template>
- <form @submit.prevent="onFormSubmit">
+ <form >
     <router-link class="back" to="/note-create"><button>&#8592;</button></router-link>
     <input type="date" name="" id="" v-model="date" />
     <input type="time" name="" id="" v-model="time" />
-    <router-link class="link" :to="link"><input type="submit" value="Далее" @click="onFormSubmit"/></router-link>
+    <input type="submit" value="Далее" @click="queryInfo"/>
     
   </form>
 </template>
 
 <script>
-import {mapMutations} from "vuex"
+// import {mapMutations} from "vuex"
 
 export default {
     data() {
@@ -20,16 +20,37 @@ export default {
         }
     },
 methods: {
-    ...mapMutations(['newNoteDate']),
-    onFormSubmit() {
-        if(this.date&&this.time) {
-            this.link="/note-importance"
-        this.newNoteDate({
-            date: this.date,
-            time: this.time,
+    // ...mapMutations(['newNoteDate']),
+    // onFormSubmit() {
+    //     if(this.date&&this.time) {
+    //         this.link="/note-importance"
+    //     this.newNoteDate({
+    //         date: this.date,
+    //         time: this.time,
         
-        })
-    }
+    //     })
+    // }
+    // },
+       queryInfo() {
+           console.log(this.$route.query.value)
+      this.$router.push({
+        name:'noteImportance',
+        query: {
+          date: this.date,
+          time: this.time,
+          title: this.$route.query.value,
+          body: this.$route.query.valueNote
+        },
+        // params: {
+        //   title: this.$route.query.value,
+        //   body: this.$route.query.valueNote
+        // }
+      })
+        //  this.newNoteDate({
+        //     date: this.date,
+        //     time: this.time,
+        
+        // })
     }
 }
 }

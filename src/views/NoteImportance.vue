@@ -1,5 +1,5 @@
 <template>
- <form @submit.prevent="onFormSubmit">
+ <form >
     <router-link class="back" to="/note-date"><button>&#8592;</button></router-link>
     <label for="important">Укажите важность заметки:</label>
     <select name="" id="important" v-model="importance">
@@ -7,13 +7,13 @@
         <option value="2">Средневажно</option>
          <option value="3">Маловажно</option>
     </select>
-    <router-link class="link" :to="link"><input type="submit" value="Создать заметку" @click="onFormSubmit" /></router-link>
+   <input type="submit" value="Создать заметку" @click="queryInfo" />
     
   </form>
 </template>
 
 <script>
-import {mapMutations} from "vuex"
+// import {mapMutations} from "vuex"
 
 export default {
     data() {
@@ -23,15 +23,34 @@ export default {
         }
     },
 methods: {
-    ...mapMutations(['newNoteImportance']),
-    onFormSubmit() {
-        if (this.importance) {
-            this.link = "/notes"
-        this.newNoteImportance({
-            importance: this.importance,
-            id: Date.now()
-        })
+    // ...mapMutations(['newNoteImportance']),
+    // onFormSubmit() {
+    //     if (this.importance) {
+    //         this.link = "/notes"
+    //     this.newNoteImportance({
+    //         importance: this.importance,
+    //         id: Date.now()
+    //     })
+    //     }
+    // },
+     queryInfo() {
+      this.$router.push({
+        name:'Notes',
+        query: {
+          importance: this.importance,
+          title: this.$route.query.title,
+          body: this.$route.query.body,
+          date: this.$route.query.date,
+            time: this.$route.query.time
+        },
+        params: {
+          gayshit: 'we r'
         }
+      })
+    //    this.newNoteImportance({
+    //         importance: this.importance,
+    //         id: Date.now()
+    //     })
     }
 }
 }

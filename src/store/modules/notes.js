@@ -24,24 +24,32 @@ export default {
     //       }, 1000);
     //     });
     // },
+    newNote({ commit }, content) {
+      commit("addNote", content);
+    }
   },
   mutations: {
     // updateNotes(state, notes) {
     //   state.notes = notes;
     // },
-    newNoteCreate(state, content) {
-      state.newNote.title = content.title;
-      state.newNote.body = content.body;
-    },
-    newNoteDate(state, content) {
-      state.newNote.date = content.date;
-      state.newNote.time = content.time;
-    },
-    newNoteImportance(state, content) {
-      state.newNote.importance = content.importance;
+    // newNoteCreate(state, content) {
+    //   state.newNote.title = content.title;
+    //   state.newNote.body = content.body;
+    // },
+    // newNoteDate(state, content) {
+    //   state.newNote.date = content.date;
+    //   state.newNote.time = content.time;
+    // },
+    // newNoteImportance(state, content) {
+    //   state.newNote.importance = content.importance;
+    //   state.notes.push(state.newNote);
+    //   state.newNote = {};
+    // },
+    addNote(state, content) {
+      state.newNote = content
       state.notes.push(state.newNote);
       state.newNote = {};
-    },
+    }
   },
   state: {
     notes: [
@@ -67,7 +75,7 @@ export default {
         title: "Anime",
         body: "Я пожилой крипер на пудже на миде на спидах на войне под спайсом ааааааа да я адяа дад да дед старый аа ываы ваыва ыва ыва ыва ",
         order: 3,
-        id: 1,
+        id: 2,
         date: "11.05.1996",
         time: "02:38",
         importance: 1,

@@ -16,11 +16,7 @@
 <script>
 
 export default {
-  // data() {
-  //   return {
-      
-  //   }
-  // }
+
   props: ["note"],
 
   methods: {
@@ -28,11 +24,6 @@ export default {
       this.$refs.area.rows=1
     }
   },
-  mounted: {
-    res() {
-      this.$refs.area.style.height="100px"
-    }
-  }
 }
 </script>
 

@@ -1,15 +1,15 @@
 <template>
-  <form @submit.prevent="onFormSubmit">
+  <form >
     <router-link class="back" to="/notes"><button>&#8592;</button></router-link>
     <input type="text" name="" id="" v-model="value" placeholder="Дело..." />
     <textarea type="textarea" name="" id="" v-model="valueNote" placeholder="Текст заметки..." />
-    <router-link class="link" :to="link" ><input type="submit" value="Далее" @click="onFormSubmit" /></router-link>
+   <input type="submit" value="Далее" @click="queryInfo"/>
     
   </form>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+// import { mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -19,20 +19,35 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['newNoteCreate']),
+    // ...mapMutations(['newNoteCreate']),
     
-    onFormSubmit() {
-       console.log(this.value)
-      if(this.value&&this.valueNote) {
-       this.link="/note-date"
-       this.newNoteCreate({
-        title: this.value,
-        body: this.valueNote,
-       })
-       this.value=''
-        this.valueNote=''
+    // onFormSubmit() {
+    //   if(this.value&&this.valueNote) {
+    //    this.link="/note-date"
+    //    this.newNoteCreate({
+    //     title: this.value,
+    //     body: this.valueNote,
+    //    })
+    //    this.value=''
+    //     this.valueNote=''
+    // }
+    // },
+       queryInfo() {
+      this.$router.push({
+        name:'noteDate',
+        query: {
+          value: this.value,
+          valueNote: this.valueNote
+        },
+        params: {
+          gayshit: 'u r'
+        }
+      })
+      // this.newNoteCreate({
+      //   title: this.value,
+      //   body: this.valueNote,
+      //  })
     }
-    },
   }
   }
 </script>

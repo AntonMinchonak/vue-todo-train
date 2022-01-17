@@ -5,7 +5,8 @@
       <option value="Incompleted">Incompleted</option>
       <option value="Completed">Completed</option>
     </select>
-    <router-link class="link" to="/note-create"><button><span>+</span>Create Note </button></router-link>
+    <button @click="queryInfo"><span>+</span>Create Note </button>
+
     <NoteList :notes="allNotes" />
   </div>
 </template>
@@ -21,9 +22,6 @@ export default {
         filterHome: 'All',
          }
   },
-  mounted() {
-      // this.$store.dispatch("retriveNotes")
-  },
   components: {
     NoteList,
   },
@@ -34,7 +32,21 @@ export default {
     ...mapMutations(['filterList']),
     changeFilter () {
       this.filterList(this.filterHome)
+    },
+    queryInfo() {
+      this.$router.push({
+        name:'noteCreate',
+        query: {
+          suka: "pziaed"
+        },
+        params: {
+          gayshit: 'i am'
+        }
+      })
     }
+  },
+  created() {
+       this.$store.dispatch("newNote",this.$route.query)
   }
 }
 </script>
@@ -73,6 +85,7 @@ button {
  border-radius:3px ;
  font-size: 16px;
  margin-bottom: 20px;
+ margin-right: auto;
 }
 
 .link {
