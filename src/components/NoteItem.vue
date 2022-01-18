@@ -1,6 +1,9 @@
 <template>
   <li>
-    <input class="title" v-model="note.title" disabled />
+    <div class="title-wrap">
+    <input class="title" v-model="note.title" disabled /> 
+    <p :class="[imp1, imp2, imp3]">&#8226; {{impMessage}}</p>
+    </div>
     <textarea @input="resize" ref="area"  :rows="note.body.length/23" class="body" v-model="note.body" disabled />
     <div class="timedate">
       <div >{{note.date}}</div>
@@ -16,7 +19,23 @@
 <script>
 
 export default {
-
+  data() {
+    return {
+      imp1: this.note.importance === 1 ? 'imp1' : "",
+      imp2: this.note.importance === 2 ? 'imp2' : "",
+      imp3: this.note.importance === 3 ? 'imp3' : "",
+    }
+  },
+  computed: {
+    impMessage() {
+      switch (this.note.importance) {
+        case 1: return "Очень важно"
+        case 2: return "Средневажно"
+        case 3: return "Маловажно"
+        default:return "Средневажно"
+      }
+    }
+  },
   props: ["note"],
 
   methods: {
@@ -162,5 +181,23 @@ input[disabled] {
   color: rgb(140, 165, 159);
 }
 
+.title-wrap {
+  display: flex;
+}
 
+p {
+  font-size: 14px;
+}
+
+.imp1 {
+  color:rgb(228, 44, 44)
+}
+
+.imp2 {
+  color:rgb(168, 168, 24);
+}
+
+.imp3 {
+  color:rgb(51, 134, 100);
+}
 </style>

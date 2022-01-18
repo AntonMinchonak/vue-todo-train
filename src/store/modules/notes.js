@@ -69,7 +69,7 @@ export default {
         id: 1,
         date: "25.05.1996",
         time: "02:28",
-        importance: 1,
+        importance: 2,
       },
       {
         title: "Anime",

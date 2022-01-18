@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onFormSubmit">
-    <input type="text" name="" id="" v-model="value" placeholder="Дело..." />
+    <input class="todo-text" type="text" name="" id="" v-model="value" placeholder="Дело..." />
     <input type="submit" value="Создать" />
   </form>
 </template>
@@ -35,9 +35,9 @@ export default {
 
 <style scoped>
 
-
-input[type="text"] {
-width: 100%;
+.todo-text {
+width: auto;
+flex-grow:1;
 border:1px solid rgb(153, 230, 200);
 padding: 5px 10px;
 border-radius: 3px; 
@@ -54,6 +54,7 @@ width: 100%;
 
 form {
   display: flex;
+  flex-direction: row;
   gap: 10px;
   justify-content: space-between;
   margin-bottom: 20px;
@@ -67,6 +68,8 @@ color: white;
 font-size: 16px;
 font-weight: bold;
 border-radius: 3px;
+flex-grow: 0;
+width:auto;
 }
 
 input[type="submit"]:active {

@@ -1,9 +1,9 @@
 <template>
-  <form >
+  <form class="noteform">
     <router-link class="back" to="/notes"><button>&#8592;</button></router-link>
-    <input type="text" name="" id="" v-model="value" placeholder="Дело..." />
+    <input class="note-create" type="text" name="" id="" v-model="value" placeholder="Дело..." />
     <textarea type="textarea" name="" id="" v-model="valueNote" placeholder="Текст заметки..." />
-   <input type="submit" value="Далее" @click="queryInfo"/>
+   <input type="submit" value="Далее" @click.prevent="queryInfo"/>
     
   </form>
 </template>
@@ -33,6 +33,7 @@ export default {
     // }
     // },
        queryInfo() {
+         if(this.value&&this.valueNote) {
       this.$router.push({
         name:'noteDate',
         query: {
@@ -50,12 +51,13 @@ export default {
     }
   }
   }
+  }
 </script>
 
 
 
 <style scoped>
-input[type="text"] {
+.note-create {
 flex-grow: 1;
 border:1px solid rgb(153, 230, 200);
 padding: 5px 10px;
@@ -84,7 +86,7 @@ textarea:focus {
   border:1px solid rgb(35, 158, 111);
 }
 
-form {
+.noteform {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -102,7 +104,7 @@ color: white;
 font-size: 16px;
 font-weight: bold;
 border-radius: 3px;
- width: 100%
+ width: auto;
 }
 
 input[type="submit"]:active {

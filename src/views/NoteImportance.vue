@@ -3,11 +3,11 @@
     <router-link class="back" to="/note-date"><button>&#8592;</button></router-link>
     <label for="important">Укажите важность заметки:</label>
     <select name="" id="important" v-model="importance">
-        <option value="1">Очень важно</option>
-        <option value="2">Средневажно</option>
-         <option value="3">Маловажно</option>
+        <option :value="1" >Очень важно</option>
+        <option :value="2">Средневажно</option>
+         <option :value="3">Маловажно</option>
     </select>
-   <input type="submit" value="Создать заметку" @click="queryInfo" />
+   <input type="submit" value="Создать заметку" @click.prevent="queryInfo" />
     
   </form>
 </template>
@@ -18,11 +18,12 @@
 export default {
     data() {
         return {
-            importance:"",
+            importance:1,
             link: ""
         }
     },
 methods: {
+ 
     // ...mapMutations(['newNoteImportance']),
     // onFormSubmit() {
     //     if (this.importance) {
@@ -34,6 +35,7 @@ methods: {
     //     }
     // },
      queryInfo() {
+       if(this.importance) {
       this.$router.push({
         name:'Notes',
         query: {
@@ -52,6 +54,9 @@ methods: {
     //         id: Date.now()
     //     })
     }
+  
+
+     }
 }
 }
 </script>

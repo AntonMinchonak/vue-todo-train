@@ -3,7 +3,7 @@
     <router-link class="back" to="/note-create"><button>&#8592;</button></router-link>
     <input type="date" name="" id="" v-model="date" />
     <input type="time" name="" id="" v-model="time" />
-    <input type="submit" value="Далее" @click="queryInfo"/>
+    <input type="submit" value="Далее" @click.prevent="queryInfo"/>
     
   </form>
 </template>
@@ -32,6 +32,7 @@ methods: {
     // }
     // },
        queryInfo() {
+         if(this.date&&this.time) {
            console.log(this.$route.query.value)
       this.$router.push({
         name:'noteImportance',
@@ -52,6 +53,7 @@ methods: {
         
         // })
     }
+       }
 }
 }
 </script>
