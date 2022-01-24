@@ -36,7 +36,7 @@ export default {
   },
   props: ["todo"],
   methods: {
-    ...mapMutations(["deleteTodo", "changeTodoStatementStore"]),
+    ...mapMutations(["deleteTodo", "changeTodoStatementStore", "editedTodo"]),
     changeTodoStatement(event) {
       if (event.target.classList.contains("checkbox"))
         this.changeTodoStatementStore(this.todo.order);
@@ -45,13 +45,17 @@ export default {
         event.target.tagName !== "IMG" &&
         event.target.disabled
       )
-        this.changeTodoStatementStore(this.todo.order);
+      console.log(this.todo)
+        this.changeTodoStatementStore(this.todo);
     },
     removeTodo() {
-      this.deleteTodo(this.todo.id);
+      
+      this.deleteTodo(this.todo._id);
     },
     editTitle() {
       this.isEdit = !this.isEdit;
+        this.editedTodo(this.todo)
+      
     },
   },
 };
