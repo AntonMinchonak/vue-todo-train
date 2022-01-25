@@ -49,6 +49,20 @@ export default {
       state.newNote = content
       state.notes.push(state.newNote);
       state.newNote = {};
+    },
+    deleteNote(state, note) {
+      state.notes = state.notes.filter(el => el.id!=note.id)
+    },
+    editNotes(state, note) {
+      for (let i = 0; i < state.notes; i++) {
+        if (note.id === state.notes[i].id) {
+          state.notes[i].title = note.title
+          state.notes[i].body = note.body;
+        }
+      }
+    },
+    filterNotes(state, filter) {
+      state.filterNote = filter
     }
   },
   state: {
@@ -72,20 +86,32 @@ export default {
         importance: 2,
       },
       {
-        title: "Anime",
+        title: "Anime anime chto? da",
         body: "Я пожилой крипер на пудже на миде на спидах на войне под спайсом ааааааа да я адяа дад да дед старый аа ываы ваыва ыва ыва ыва ",
         order: 3,
         id: 2,
         date: "11.05.1996",
         time: "02:38",
-        importance: 1,
+        importance: 3,
       },
     ],
     newNote: {},
+    filterNote: 'All'
   },
   getters: {
     allNotes(state) {
-      return state.notes;
+          switch (state.filterNote) {
+            case "All":
+              return state.notes;
+            case "Very":
+              return state.notes.filter((el) => el.importance===1);
+            case "Medium":
+              return state.notes.filter((el) => el.importance === 2);
+            case "Low":
+              return state.notes.filter((el) => el.importance === 3);
+            default:
+              return state.notes;
+          }
     },
   },
 };

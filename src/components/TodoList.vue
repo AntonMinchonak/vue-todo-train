@@ -2,9 +2,9 @@
     <div>
        <Spinner v-if="!getLoad" />
         <ul v-else>
-           <!-- <transition-group name="list-complete" tag="p"> -->
-            <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" />
-           <!-- </transition-group> -->
+           <transition-group class="anime" name="list-complete" tag="p">
+            <TodoItem v-for="todo in todos" :key="todo._id" :todo="todo" />
+           </transition-group>
         </ul>
         <p v-if="!todos.length">Список задач пуст. Наконец-то ты свободен.</p>
     </div>
@@ -33,6 +33,7 @@ ul {
     flex-direction: column;
     padding: 0px;
     gap: 10px; 
+    margin: 0;
 }
 
 .list-complete-item {
@@ -47,5 +48,10 @@ ul {
 }
 .list-complete-leave-active {
   position: absolute;
+}
+.anime {
+display:flex;
+flex-direction: column;
+gap: 10px;
 }
 </style>

@@ -118,6 +118,7 @@ cursor: pointer;
 .back {
   margin-right: auto;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 
 button {
@@ -127,7 +128,7 @@ button {
   font-size: 20px;
   padding: 0 20px 4px ;
   border-radius: 3px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   cursor: pointer;
 }
 

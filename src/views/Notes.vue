@@ -1,79 +1,86 @@
 <template>
   <div class="notes">
-    <select name="" id="" v-model="filterHome" @change="changeFilter">
+    <div class="controls">
+    <select name="" id="" v-model="filterNote" @change="changeFilter">
       <option value="All">All</option>
-      <option value="Incompleted">Incompleted</option>
-      <option value="Completed">Completed</option>
+      <option value="Very">Очень важные</option>
+      <option value="Medium">Средневажные</option>
+          <option value="Low">Маловажные</option>
     </select>
-    <button @click="queryInfo"><span>+</span>Create Note </button>
-
+    <button @click="queryInfo"><span>+</span>Create Note</button>
+</div>
     <NoteList :notes="allNotes" />
   </div>
 </template>
 
 <script>
 import NoteList from "@/components/NoteList.vue";
-import {mapGetters, mapMutations} from 'vuex';
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
- name: "Home",
+  name: "Home",
   data() {
-    return { 
-        filterHome: 'All',
-         }
+    return {
+      filterNote: "All",
+    };
   },
   components: {
     NoteList,
   },
-   computed: {
-    ...mapGetters(['allNotes']),
+  computed: {
+    ...mapGetters(["allNotes"]),
   },
   methods: {
-    ...mapMutations(['filterList']),
-    changeFilter () {
-      this.filterList(this.filterHome)
+    ...mapMutations(["filterNotes"]),
+    changeFilter() {
+      this.filterNotes(this.filterNote);
     },
     queryInfo() {
       this.$router.push({
-        name:'noteCreate',
+        name: "noteCreate",
         query: {
-          suka: "pziaed"
+          suka: "pziaed",
         },
         params: {
-          gayshit: 'i am'
-        }
-      })
-    }
+          gayshit: "i am",
+        },
+      });
+    },
   },
   created() {
-       this.$store.dispatch("newNote",this.$route.query)
-  }
-}
+    this.$store.dispatch("newNote", this.$route.query);
+  },
+};
 </script>
 
 <style scoped>
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .notes {
   width: 800px;
-  margin: 0 auto;
+  margin: 30px auto;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-
 span {
-font-size: 40px;
-line-height: 20px;
-vertical-align: bottom;
-margin-right: 5px;
+  font-size: 40px;
+  line-height: 20px;
+  vertical-align: bottom;
+  margin-right: 5px;
 }
 
 select {
   padding: 3px;
-  align-self: start;
   border: 1px solid rgb(223, 223, 223);
   padding: 5px;
   border-radius: 3px;
+  order: 1;
 }
 
 button {
@@ -82,14 +89,12 @@ button {
   border: none;
   color: white;
   font-weight: 600;
- border-radius:3px ;
- font-size: 16px;
- margin-bottom: 20px;
- margin-right: auto;
+  border-radius: 3px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .link {
- margin-right: auto;
+  margin-right: auto;
 }
-
 </style>

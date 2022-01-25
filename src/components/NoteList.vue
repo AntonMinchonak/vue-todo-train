@@ -25,6 +25,8 @@ export default {
 
 
 <style scoped>
+
+
 ul {
     list-style: none;
     display: flex;
@@ -32,5 +34,7 @@ ul {
     padding: 0px;
     gap: 20px; 
     margin: 0;
+    margin-top: 20px;
+
 }
 </style>

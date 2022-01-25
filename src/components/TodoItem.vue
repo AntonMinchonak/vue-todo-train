@@ -1,5 +1,6 @@
 <template>
-  <li @click="changeTodoStatement" :class="{ complete: todo.completed }">
+
+  <li @click="changeTodoStatement" :class="{ complete: todo.completed }" :aria-disabled="isEdit">
     <input
       class="checkbox"
       type="checkbox"
@@ -25,6 +26,7 @@
     </button>
     <button class="remove" @click="removeTodo">&times;</button>
   </li>
+  
 </template>
 
 <script>
@@ -42,10 +44,9 @@ export default {
         this.changeTodoStatementStore(this.todo.order);
       if (
         event.target.tagName !== "BUTTON" &&
-        event.target.tagName !== "IMG" &&
-        event.target.disabled
+        event.target.tagName !== "IMG" &&(
+        event.target.disabled||event.target.ariaDisabled)
       )
-      console.log(this.todo)
         this.changeTodoStatementStore(this.todo);
     },
     removeTodo() {
@@ -54,6 +55,9 @@ export default {
     },
     editTitle() {
       this.isEdit = !this.isEdit;
+      setInterval(()=>{
+        this.$refs.tit.focus()
+      },0)
         this.editedTodo(this.todo)
       
     },
@@ -88,7 +92,7 @@ li:hover {
 
 span {
   margin-right: auto;
-  overflow: hidden;
+
   text-align: start;
 }
 
@@ -113,8 +117,7 @@ button {
 }
 
 button:active {
-  width: 30px;
-  height: 30px;
+  transform: scale(1.5);
 }
 
 button:hover {

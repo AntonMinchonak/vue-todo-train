@@ -32,7 +32,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ "../views/NoteCreate.vue"),
+    component: () => import(/* webpackChunkName: "notecreate" */ "../views/NoteCreate.vue"),
   },
   {
     path: "/note-date",
@@ -40,7 +40,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ "../views/NoteDate.vue"),
+    component: () => import(/* webpackChunkName: "notedate" */ "../views/NoteDate.vue"),
   },
   {
     path: "/note-importance",
@@ -48,7 +48,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ "../views/NoteImportance.vue"),
+    component: () => import(/* webpackChunkName: "noteimportance" */ "../views/NoteImportance.vue"),
   },
 ];
 

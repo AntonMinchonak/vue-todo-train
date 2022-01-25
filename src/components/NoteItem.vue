@@ -1,22 +1,23 @@
 <template>
   <li>
     <div class="title-wrap">
-    <input class="title" v-model="note.title" disabled /> 
-    <p :class="[imp1, imp2, imp3]">&#8226; {{impMessage}}</p>
+    <textarea class="title" v-model="note.title" @keyup.enter="editNote" :disabled="isEdit" :cols="note.title.length<36 ? note.title.length:36" :rows="note.title.length<30 ? 1 : note.title.length/32" ref="tit"/> 
+     <button class="pen" @click="editNote">
+      <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span v-if="!isEdit">&#10003;</span>
+    </button>
+    <button class="remove" @click="removeNote">&times;</button>
+    <p class="imp" :class="[imp1, imp2, imp3]">{{impMessage}}</p>
     </div>
-    <textarea @input="resize" ref="area"  :rows="note.body.length/23" class="body" v-model="note.body" disabled />
+    <textarea ref="area"  :rows="note.body.length/29" class="body" v-model="note.body" :disabled="isEdit" />
     <div class="timedate">
       <div >{{note.date}}</div>
       <div >{{note.time}}</div>
     </div>
-    <!-- <button class="pen" @click="editTitle">
-      <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span v-if="!isEdit">&#10003;</span>
-    </button>
-    <button class="remove" @click="removeTodo">&times;</button> -->
   </li>
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 
 export default {
   data() {
@@ -24,6 +25,7 @@ export default {
       imp1: this.note.importance === 1 ? 'imp1' : "",
       imp2: this.note.importance === 2 ? 'imp2' : "",
       imp3: this.note.importance === 3 ? 'imp3' : "",
+      isEdit:true
     }
   },
   computed: {
@@ -39,8 +41,16 @@ export default {
   props: ["note"],
 
   methods: {
-    resize() {
-      this.$refs.area.rows=1
+   ...mapMutations(['deleteNote', 'editNotes']),
+    removeNote() {
+      this.deleteNote(this.note)
+    },
+    editNote() {
+      this.isEdit=!this.isEdit
+      this.editNotes(this.note)
+      setTimeout(()=> {
+           this.$refs.tit.focus()
+      },0)
     }
   },
 }
@@ -53,7 +63,7 @@ li {
   flex-direction: column;
   gap: 15px;
   width: 369px;
-  border: 1px solid rgb(200, 255, 243);
+  border: 1px solid rgb(161, 223, 209);
   padding: 10px;
   font-size: 18px;
   border-top: none;
@@ -62,17 +72,33 @@ li {
   transition: 0.2s ease-in-out;
 }
 
+
+textarea {
+  resize: none;
+    border: 1px solid rgb(191, 255, 230);
+ border-radius: 3px;
+  font-size: 16px;
+  flex-grow: 1;
+  cursor: pointer;
+  padding: 4px;
+  color: rgb(46, 56, 58);
+  font-family: sans-serif;
+}
+
 textarea:disabled {
 border:none;
 border-radius: 3px; 
 vertical-align: top;
 resize: none;
-font-family: sans-serif;
 font-size: 18px;
 background: none;
 overflow: hidden;
 }
 
+textarea:focus {
+  outline: none;
+  cursor: text;
+}
 
 li:hover {
   background: rgb(250, 255, 253);
@@ -92,17 +118,23 @@ span {
 button {
   background: white;
   border: 1px solid rgb(255, 126, 126);
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   color: red;
-  font-size: 30px;
+  font-size: 21px;
   line-height: 13px;
   padding: 0;
   border-radius: 3px;
   text-decoration-color: rgba(255, 0, 0, 0);
   transition: 0.3s ease-in-out;
   cursor: pointer;
+  display: none;
 }
+
+li:hover button {
+display: block;
+}
+
 .number {
   font-size: 16px;
   font-weight: bold;
@@ -110,8 +142,7 @@ button {
 }
 
 button:active {
-  width: 30px;
-  height: 30px;
+  transform: scale(1.3);
 }
 
 button:hover {
@@ -121,23 +152,23 @@ button:hover {
 
 .pen {
   border-color: rgb(35, 158, 111);
-  width: 20px;
-  height: 20px;
   background: white;
   color: rgb(35, 158, 111);
-  font-size: 16px;
+  font-size: 14px;
   vertical-align: center;
-  line-height: 21px;
+  line-height: 15px;
   transition: 0.2 ease-in-out;
+  margin-right:4px; 
+  margin-left: 3px; 
+}
+
+.pen>img {
+  width: 10px;
+  height: 10px;
 }
 
 .pen:hover {
   background: rgb(4, 41, 27);
-}
-
-.pen:active {
-  width: 20px;
-  height: 20px;
 }
 
 input[disabled] {
@@ -153,9 +184,13 @@ input[disabled] {
   margin-right: auto;
   font-size: 16px;
   font-weight: 600;
+  /* flex-grow: 1; */
   cursor: pointer;
   padding: 4px;
   color: rgb(46, 56, 58);
+  vertical-align: middle;
+  min-height:20px;
+  /* width: 200px; */
 }
 
 .title:disabled {
@@ -183,21 +218,38 @@ input[disabled] {
 
 .title-wrap {
   display: flex;
+  align-items: center;
+  gap:0px;
+  flex-wrap: wrap;
 }
 
 p {
   font-size: 14px;
 }
 
+.imp {
+width: 100px;
+padding: 0 1px;
+border: 1px solid black;
+border-radius: 10px;
+margin-left: 6px;
+}
+
+
 .imp1 {
-  color:rgb(228, 44, 44)
+  color:rgb(211, 49, 49);
+  border-color:rgb(211, 49, 49); 
 }
 
 .imp2 {
   color:rgb(168, 168, 24);
+   border-color:rgb(168, 168, 24); 
 }
 
 .imp3 {
   color:rgb(51, 134, 100);
+  border-color:rgb(51, 134, 100); 
 }
+
+
 </style>

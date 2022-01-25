@@ -21,17 +21,16 @@ export default {
        this.onFormSubmitStore({
         completed: false,
         title: this.value,
-        id: Date.now(),
+        _id: Date.now(),
         order: 0
        })
        this.value=''
+ 
     }
     },
   }
   }
 </script>
-
-
 
 <style scoped>
 

@@ -7,9 +7,9 @@ export default {
         .get("http://127.0.0.1:3000/products")
         .then((res) => res.data)
         .then((res) => {
-          console.log(res);
           res = res.reverse();
           let completedList = res.filter((el) => el.completed);
+          completedList = completedList.reverse()
           let uncompletedList = res.filter((el) => !el.completed);
           //   uncompletedList= uncompletedList.concat(completedList);
           let preTodos = [...uncompletedList, ...completedList];
@@ -33,7 +33,9 @@ export default {
       state.todos = todos;
     },
     onFormSubmitStore(state, newTodo) {
+      // console.log(state.todos)
       state.todos.unshift(newTodo);
+      console.log(state.todos);
       for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
       axios
         .post("http://127.0.0.1:3000/products", newTodo)
