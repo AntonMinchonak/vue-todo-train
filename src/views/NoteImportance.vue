@@ -14,7 +14,7 @@
 </template>
 
 <script>
-// import {mapMutations} from "vuex"
+import {mapMutations} from "vuex"
 
 export default {
   data() {
@@ -24,7 +24,7 @@ export default {
     };
   },
   methods: {
-    // ...mapMutations(['newNoteImportance']),
+    ...mapMutations(['addNote']),
     // onFormSubmit() {
     //     if (this.importance) {
     //         this.link = "/notes"
@@ -36,15 +36,23 @@ export default {
     // },
     queryInfo() {
       if (this.importance) {
-        this.$router.push({
-          name: "Notes",
-          query: {
+        this.addNote({
             importance: this.importance,
             title: this.$route.query.title,
             body: this.$route.query.body,
             date: this.$route.query.date,
             time: this.$route.query.time,
-          },
+           
+          })
+        this.$router.push({
+          name: "Notes",
+          // query: {
+          //   importance: this.importance,
+          //   title: this.$route.query.title,
+          //   body: this.$route.query.body,
+          //   date: this.$route.query.date,
+          //   time: this.$route.query.time,
+          // },
           params: {
             gayshit: "we r",
           },
@@ -54,6 +62,7 @@ export default {
         //         id: Date.now()
         //     })
       }
+      
     },
   },
 };

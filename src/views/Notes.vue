@@ -48,7 +48,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("newNote", this.$route.query);
+    this.$store.dispatch("retriveNotes");
   },
 };
 </script>

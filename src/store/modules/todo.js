@@ -9,22 +9,30 @@ export default {
         .then((res) => {
           res = res.reverse();
           let completedList = res.filter((el) => el.completed);
-          completedList = completedList.reverse()
+          completedList = completedList.reverse();
           let uncompletedList = res.filter((el) => !el.completed);
           //   uncompletedList= uncompletedList.concat(completedList);
           let preTodos = [...uncompletedList, ...completedList];
           //   for (let i = 0; i < preTodos.length; i++) {
           //     preTodos[i].order=i+1;
           //   }
-          
+
           preTodos.forEach((el, index) => {
             preTodos[index].order = index + 1;
           });
           const todos = [...uncompletedList, ...completedList];
           ctx.commit("updateTodos", todos);
           // setTimeout(() => {
-            ctx.commit("updateIsLoaded");
+          ctx.commit("updateIsLoaded");
           // }, 1000);
+        })
+        .catch((err) => {
+          console.log("iuh" + err);
+          ctx.commit("updateIsLoaded");
+          ctx.commit("updateIsError");
+        })
+        .finally(() => {
+          ctx.commit("updateIsLoaded");
         });
     },
   },
@@ -37,8 +45,7 @@ export default {
       state.todos.unshift(newTodo);
       console.log(state.todos);
       for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
-      axios
-        .post("http://127.0.0.1:3000/products", newTodo)
+      axios.post("http://127.0.0.1:3000/products", newTodo);
     },
     deleteTodo(state, todoId) {
       console.log(todoId);
@@ -46,8 +53,8 @@ export default {
       for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
       axios.delete(`http://127.0.0.1:3000/products/${todoId}`);
     },
-    changeTodoStatementStore(state,item) {
-      console.log(item)
+    changeTodoStatementStore(state, item) {
+      console.log(item);
       state.todos[item.order - 1].completed = !state.todos[item.order - 1].completed;
       let typeOfCheck = state.todos[item.order - 1].completed;
       let sliced = state.todos.splice(item.order - 1, 1)[0];
@@ -57,26 +64,30 @@ export default {
         state.todos.splice(state.todos.length, 0, sliced);
       }
       for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
-      console.log(item)
+      console.log(item);
       axios.put(`http://127.0.0.1:3000/products/${item._id}`, item);
     },
     filterList(state, filter) {
       state.filter = filter;
     },
     updateIsLoaded(state) {
-      state.isLoaded = true
+      state.isLoaded = true;
     },
-    editedTodo(state,item) {
+    updateIsError(state) {
+      state.isError = true;
+    },
+    editedTodo(state, item) {
       for (let i = 0; i < state.todos.length; i++) {
-        if (state.todos[i]._id===item._id) state.todos[i].title=item.title
+        if (state.todos[i]._id === item._id) state.todos[i].title = item.title;
       }
       axios.put(`http://127.0.0.1:3000/products/${item._id}`, item);
-    }
+    },
   },
   state: {
     todos: [],
     filter: "All",
-    isLoaded: false
+    isLoaded: false,
+    isError: false,
   },
   getters: {
     allTodos(state) {
@@ -92,7 +103,10 @@ export default {
       }
     },
     getLoad(state) {
-      return state.isLoaded
-    }
+      return state.isLoaded;
+    },
+    getError(state) {
+      return state.isError;
+    },
   },
 };

@@ -1,14 +1,15 @@
 <template>
   <li>
     <div class="title-wrap">
-    <textarea class="title" v-model="note.title" @keyup.enter="editNote" :disabled="isEdit" :cols="note.title.length<36 ? note.title.length:36" :rows="note.title.length<30 ? 1 : note.title.length/32" ref="tit"/> 
+    <textarea class="title" v-model="note.title" :disabled="isEdit" :cols="note.title.length<32 ? 17:note.title.length" :rows="rowCalculate" ref="tit" /> 
      <button class="pen" @click="editNote">
       <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span v-if="!isEdit">&#10003;</span>
     </button>
     <button class="remove" @click="removeNote">&times;</button>
     <p class="imp" :class="[imp1, imp2, imp3]">{{impMessage}}</p>
     </div>
-    <textarea ref="area"  :rows="note.body.length/29" class="body" v-model="note.body" :disabled="isEdit" />
+    <div class="line"></div>
+    <textarea ref="area"  :rows="note.body.length/32" class="body" v-model="note.body" :disabled="isEdit" />
     <div class="timedate">
       <div >{{note.date}}</div>
       <div >{{note.time}}</div>
@@ -22,9 +23,6 @@ import {mapMutations} from 'vuex'
 export default {
   data() {
     return {
-      imp1: this.note.importance === 1 ? 'imp1' : "",
-      imp2: this.note.importance === 2 ? 'imp2' : "",
-      imp3: this.note.importance === 3 ? 'imp3' : "",
       isEdit:true
     }
   },
@@ -36,7 +34,32 @@ export default {
         case 3: return "Маловажно"
         default:return "Средневажно"
       }
-    }
+    },
+    rowCalculate() {
+      switch (true) {
+        case (this.note.title.length<20): return 1
+        case (this.note.title.length>=20&&this.note.title.length<60): return 2
+        case (this.note.title.length>=60&&this.note.title.length<120): return this.note.title.length/25
+        case (this.note.title.length>=120): return this.note.title.length/33
+        default: return 1
+      }
+    },
+    imp1() {
+      if ( this.note.importance === 1) {
+        return "imp1"
+      } else {return false}
+      // this.note.importance === 1 ? 'imp1' : "",
+    },
+     imp2() {
+       if ( this.note.importance === 2) {
+        return "imp2"
+       } else {return false}
+    },
+     imp3() {
+    if ( this.note.importance === 3) {
+        return "imp3"
+      } else {return false}
+    },
   },
   props: ["note"],
 
@@ -72,6 +95,12 @@ li {
   transition: 0.2s ease-in-out;
 }
 
+.line {
+  height: 1px;
+  width: 44%;
+  background: rgb(211, 241, 232);
+  margin-left: -11px;
+}
 
 textarea {
   resize: none;

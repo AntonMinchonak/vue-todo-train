@@ -6,7 +6,8 @@
             <TodoItem v-for="todo in todos" :key="todo._id" :todo="todo" />
            </transition-group>
         </ul>
-        <p v-if="!todos.length">Список задач пуст. Наконец-то ты свободен.</p>
+        <p v-if="!todos.length&&!getError">Список задач пуст. Наконец-то ты свободен.</p>
+        <p v-if="getError">Ошибка! Не удалось загрузить данные сервера, но вы можете продолжить работать оффлайн.</p>
     </div>
 </template>
 
@@ -16,7 +17,7 @@ import Spinner from '@/components/Spinner.vue'
 import { mapGetters } from "vuex";
 
 export default {
-  computed: mapGetters(['getLoad']),
+  computed: mapGetters(['getLoad','getError']),
   components: {
     TodoItem,
     Spinner
