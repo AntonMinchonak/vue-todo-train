@@ -4,8 +4,9 @@
         <ul v-else>
             <NoteItem class="itemN" v-for="note in notes" :key="note.id" :note="note" :isTrash="isTrash" />
         </ul>
-        <p v-if="!notes.length&&!isTrash">Список задач пуст. Наконец-то ты свободен.</p>
-        <p v-else-if="!notes.length&&isTrash">Корзина пуста.</p>
+        <p v-if="!notes.length&&!isTrash&&!getError">Список задач пуст. Наконец-то ты свободен.</p>
+        <p v-else-if="!notes.length&&isTrash&&!getError">Корзина пуста.</p>
+         <p v-if="getError">Ошибка! Не удалось загрузить данные сервера, но вы можете продолжить работать оффлайн.</p>
     </div>
 </template>
 
@@ -15,7 +16,7 @@ import Spinner from '@/components/Spinner.vue'
 import { mapGetters } from "vuex";
 
 export default {
-  computed: mapGetters(['getLoad']),
+  computed: mapGetters(['getLoad','getError']),
   components: {
     NoteItem,
     Spinner

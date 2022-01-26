@@ -2,7 +2,7 @@
      <div class="note-trash">
          <div class="trash-title">
            <router-link class="back" to="/notes"><button>&#8592;</button></router-link>
-         <h1>Корзина</h1>
+         <h1 class="trash-title">Корзина</h1>
     <button @click="clearAll" class="clear-all" >Очистить корзину</button>
          </div>
      <NoteList :notes="allDeletedNotes" :isTrash="isTrash"/>
@@ -46,7 +46,7 @@ created() {
     margin:0 auto;
 }
 
-h1 {
+.trash-title {
     margin:0 auto;
     margin-right: 156px;
    

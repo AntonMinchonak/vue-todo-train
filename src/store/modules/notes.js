@@ -15,6 +15,14 @@ export default {
           ctx.commit("updateNotes", notes);
 
           ctx.commit("changeLoadState");
+        })
+        .catch((err) => {
+          console.log("iuh" + err);
+          ctx.commit("updateIsLoaded");
+          ctx.commit("updateIsError");
+        })
+        .finally(() => {
+          ctx.commit("updateIsLoaded");
         });
     },
   },
