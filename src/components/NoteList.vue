@@ -2,9 +2,10 @@
     <div>
        <Spinner v-if="!getLoad" />
         <ul v-else>
-            <NoteItem v-for="note in notes" :key="note.id" :note="note" />
+            <NoteItem class="itemN" v-for="note in notes" :key="note.id" :note="note" :isTrash="isTrash" />
         </ul>
-        <p v-if="!notes.length">Список задач пуст. Наконец-то ты свободен.</p>
+        <p v-if="!notes.length&&!isTrash">Список задач пуст. Наконец-то ты свободен.</p>
+        <p v-else-if="!notes.length&&isTrash">Корзина пуста.</p>
     </div>
 </template>
 
@@ -19,7 +20,7 @@ export default {
     NoteItem,
     Spinner
   },
-  props: ["notes"],
+  props: ["notes","isTrash"],
 }
 </script>
 
@@ -35,6 +36,10 @@ ul {
     gap: 20px; 
     margin: 0;
     margin-top: 20px;
+  justify-content: space-evenly;
+}
 
+ul>.itemN:last-child {
+  margin-right:auto;
 }
 </style>

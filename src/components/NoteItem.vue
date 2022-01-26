@@ -1,11 +1,15 @@
 <template>
   <li>
     <div class="title-wrap">
-    <textarea class="title" v-model="note.title" :disabled="isEdit" :cols="note.title.length<32 ? 17:note.title.length" :rows="rowCalculate" ref="tit" /> 
-     <button class="pen" @click="editNote">
+    <textarea class="title" v-model="note.title" :disabled="isEdit" :cols="note.title.length<32 ? 15:note.title.length" :rows="rowCalculate" ref="tit" /> 
+     <button v-if="!isTrash" class="pen" @click="editNote">
       <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span v-if="!isEdit">&#10003;</span>
     </button>
-    <button class="remove" @click="removeNote">&times;</button>
+    <button v-else class="pen finall" @click="deleteNoteFinal">
+      <img src="../assets/icons9-мусор.svg" alt="" v-if="isEdit" /><span v-if="!isEdit">&#10003;</span>
+    </button>
+    <button v-if="!isTrash" class="remove" @click="removeNote">&times;</button>
+     <button v-else class="remove restore" @click="removeNote">&#8593;</button>
     <p class="imp" :class="[imp1, imp2, imp3]">{{impMessage}}</p>
     </div>
     <div class="line"></div>
@@ -61,11 +65,12 @@ export default {
       } else {return false}
     },
   },
-  props: ["note"],
+  props: ["note", "isTrash"],
 
   methods: {
-   ...mapMutations(['deleteNote', 'editNotes']),
+   ...mapMutations(['deleteNote', 'editNotes', 'deleteNoteFinall']),
     removeNote() {
+      this.note.isDeleted = !this.note.isDeleted 
       this.deleteNote(this.note)
     },
     editNote() {
@@ -74,7 +79,10 @@ export default {
       setTimeout(()=> {
            this.$refs.tit.focus()
       },0)
-    }
+    },
+  deleteNoteFinal() {
+    this.deleteNoteFinall(this.note)
+  }
   },
 }
 </script>
@@ -97,8 +105,8 @@ li {
 
 .line {
   height: 1px;
-  width: 44%;
-  background: rgb(211, 241, 232);
+  width: 106%;
+  background: rgb(216, 243, 235);
   margin-left: -11px;
 }
 
@@ -147,8 +155,8 @@ span {
 button {
   background: white;
   border: 1px solid rgb(255, 126, 126);
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   color: red;
   font-size: 21px;
   line-height: 13px;
@@ -198,6 +206,10 @@ button:hover {
 
 .pen:hover {
   background: rgb(4, 41, 27);
+}
+
+.finall {
+  border-color:red;
 }
 
 input[disabled] {
@@ -280,5 +292,14 @@ margin-left: 6px;
   border-color:rgb(51, 134, 100); 
 }
 
+.restore {
+  color: green;
+  border-color:green;
+  font-size: 14px;
+}
+
+.restore:hover {
+  background: green;
+}
 
 </style>

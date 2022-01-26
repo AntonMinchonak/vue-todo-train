@@ -42,7 +42,7 @@ export default {
             body: this.$route.query.body,
             date: this.$route.query.date,
             time: this.$route.query.time,
-           
+            isDeleted: false
           })
         this.$router.push({
           name: "Notes",

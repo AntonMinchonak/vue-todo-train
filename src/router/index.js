@@ -50,6 +50,14 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "noteimportance" */ "../views/NoteImportance.vue"),
   },
+  {
+    path: "/note-trash",
+    name: "noteTrash",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "notetrash" */ "../views/NoteTrash.vue"),
+  },
 ];
 
 const router = new VueRouter({
