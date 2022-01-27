@@ -46,7 +46,8 @@ export default {
       if (
         event.target.tagName !== "BUTTON" &&
         event.target.tagName !== "IMG"&&
-        event.target.tagName !== "INPUT"
+        event.target.tagName !== "INPUT"&&(
+        event.target.disabled||event.target.ariaDisabled)
       )
         this.changeTodoStatementStore(this.todo);
     },
