@@ -37,6 +37,7 @@ ul {
     flex-wrap: wrap;
     padding: 0px;
     gap: 20px; 
+    row-gap: 30px;
     margin: 0;
     margin-top: 20px;
   justify-content: space-evenly;

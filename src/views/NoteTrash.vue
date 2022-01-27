@@ -47,14 +47,10 @@ created() {
     margin-right: 156px;   
 }
 
-@media (max-width: 799px) {
-.trash-title {
-    margin:0 auto;  
-}
-}
 
 .back {
   cursor: pointer;
+ 
 }
 
 button {
@@ -81,5 +77,16 @@ button {
     background: rgb(35, 158, 111);
     color: white;
     font-weight: 600;
+}
+
+
+@media (max-width: 799px) {
+.trash-title {
+    margin:0 auto;  
+}
+
+.clear-all {
+    padding: 5px 10px;
+}
 }
 </style>

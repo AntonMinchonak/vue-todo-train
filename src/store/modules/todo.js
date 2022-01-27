@@ -47,24 +47,25 @@ export default {
       for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
       axios.post("http://127.0.0.1:3000/products", newTodo);
     },
-    deleteTodo(state, todoId) {
-      console.log(todoId);
-      state.todos = state.todos.filter((el) => el._id !== todoId);
-      for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
-      axios.delete(`http://127.0.0.1:3000/products/${todoId}`);
+    deleteTodo(state, todo) {
+      if (!state.isError) {
+        state.todos = state.todos.filter((el) => el._id !== todo._id);
+        for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
+        axios.delete(`http://127.0.0.1:3000/products/${todo._id}`);
+      } else {
+        state.todos = state.todos.filter((el) => el.id !== todo.id);
+        for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
+      }
+
     },
     changeTodoStatementStore(state, item) {
-      console.log(item);
       state.todos[item.order - 1].completed = !state.todos[item.order - 1].completed;
       let typeOfCheck = state.todos[item.order - 1].completed;
       let sliced = state.todos.splice(item.order - 1, 1)[0];
       if (!typeOfCheck) {
         state.todos.splice(0, 0, sliced);
-      } else {
-        state.todos.splice(state.todos.length, 0, sliced);
-      }
+      } else { state.todos.splice(state.todos.length, 0, sliced); }
       for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
-      console.log(item);
       axios.put(`http://127.0.0.1:3000/products/${item._id}`, item);
     },
     filterList(state, filter) {
@@ -77,10 +78,17 @@ export default {
       state.isError = true;
     },
     editedTodo(state, item) {
-      for (let i = 0; i < state.todos.length; i++) {
-        if (state.todos[i]._id === item._id) state.todos[i].title = item.title;
+      if (!state.isError) {
+        for (let i = 0; i < state.todos.length; i++) {
+          if (state.todos[i]._id === item._id) state.todos[i].title = item.title;
+        }
+        axios.put(`http://127.0.0.1:3000/products/${item._id}`, item);
+      } else {
+         for (let i = 0; i < state.todos.length; i++) {
+           if (state.todos[i].id === item.id) state.todos[i].title = item.title;
+         }
       }
-      axios.put(`http://127.0.0.1:3000/products/${item._id}`, item);
+
     },
   },
   state: {

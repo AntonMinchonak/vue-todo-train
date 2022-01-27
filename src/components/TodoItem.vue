@@ -1,6 +1,6 @@
 <template>
 
-  <li @click="changeTodoStatement" :class="{ complete: todo.completed }" :aria-disabled="isEdit">
+  <li @click="changeTodoStatement" :class="{ complete: todo.completed }" :aria-disabled="!isEdit">
     <input
       class="checkbox"
       type="checkbox"
@@ -46,14 +46,15 @@ export default {
       if (
         event.target.tagName !== "BUTTON" &&
         event.target.tagName !== "IMG"&&
-        event.target.tagName !== "INPUT"&&(
-        event.target.disabled||event.target.ariaDisabled)
+        event.target.tagName !== "INPUT"&&
+        event.target.tagName !== "SPAN"&&
+        !event.target.ariaDisabled
       )
         this.changeTodoStatementStore(this.todo);
     },
     removeTodo() {
       
-      this.deleteTodo(this.todo._id);
+      this.deleteTodo(this.todo);
     },
     editTitle() {
       this.isEdit = !this.isEdit;

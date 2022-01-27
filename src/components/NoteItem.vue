@@ -46,8 +46,9 @@
       :rows="note.body.length / 24"
       class="body"
       v-model="note.body"
-      :disabled="isEdit"
+      v-if="!isEdit"
     />
+    <div v-if="isEdit" class="true-body">{{note.body}}</div>
     <div class="timedate">
       <div>{{ note.date }}</div>
       <div>{{ note.time }}</div>
@@ -218,6 +219,12 @@ textarea:disabled {
   overflow: hidden;
 }
 
+.true-body {
+   font-size: 18px;
+  overflow: hidden;
+  text-align: start;
+}
+
 textarea:focus {
   outline: none;
   cursor: text;
@@ -365,6 +372,7 @@ input[disabled] {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  gap:10px;
 }
 
 .title-wrap-controls {

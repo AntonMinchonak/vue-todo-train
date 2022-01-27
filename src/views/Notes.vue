@@ -91,6 +91,7 @@ select {
   width: 25px;
   border: 1px solid rgb(35, 158, 111);
   border-radius: 3px;
+  display: flex;
 }
 
 .link-trash:hover {
@@ -99,7 +100,7 @@ select {
 
 .link-trash>img {
   height: 16px;
-  vertical-align: middle;
+ margin:auto auto;
 }
 
 button {
