@@ -15,10 +15,11 @@
       class="title"
       :class="{ complete: todo.completed }"
       v-model="todo.title"
-      :disabled="isEdit"
+      v-if="!isEdit"
       ref="tit"
       @keyup.enter="editTitle"
     />
+    <div v-if="isEdit" class="title-true">{{todo.title}}</div>
     <button class="pen" @click="editTitle">
       <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span v-if="!isEdit"
         >&#10003;</span
@@ -44,8 +45,8 @@ export default {
         this.changeTodoStatementStore(this.todo.order);
       if (
         event.target.tagName !== "BUTTON" &&
-        event.target.tagName !== "IMG" &&(
-        event.target.disabled||event.target.ariaDisabled)
+        event.target.tagName !== "IMG"&&
+        event.target.tagName !== "INPUT"
       )
         this.changeTodoStatementStore(this.todo);
     },
@@ -158,11 +159,6 @@ input[disabled] {
   font-weight: 400;
   border: none;
   font-size: 18px;
-  color: rgb(15, 29, 32) !important;
-  opacity: 1 !important;
-  -webkit-text-fill-color: #240202 !important;
-  -webkit-opacity: 1 !important;
-  background: none !important ;
 }
 
 .title {
@@ -181,6 +177,21 @@ input[disabled] {
   cursor: text;
 }
 
+.title-true {
+   background: none;
+  font-weight: 400;
+  border: none;
+  font-size: 18px;
+  margin-right: auto;
+  font-size: 16px;
+  flex-grow:1;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px;
+  color: rgb(31, 41, 41);
+  opacity: 1;
+  text-align: start;
+}
 
 .checkbox {
 display: none;

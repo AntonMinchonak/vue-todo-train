@@ -21,7 +21,7 @@ export default {
        this.onFormSubmitStore({
         completed: false,
         title: this.value,
-        _id: Date.now(),
+        id: Date.now(),
         order: 0
        })
        this.value=''

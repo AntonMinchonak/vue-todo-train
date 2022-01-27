@@ -3,7 +3,7 @@
        <Spinner v-if="!getLoad" />
         <ul v-else>
            <transition-group class="anime" name="list-complete" tag="p">
-            <TodoItem v-for="todo in todos" :key="todo._id" :todo="todo" />
+            <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" />
            </transition-group>
         </ul>
         <p v-if="!todos.length&&!getError">Список задач пуст. Наконец-то ты свободен.</p>

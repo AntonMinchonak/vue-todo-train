@@ -30,8 +30,6 @@ export default {
     addNote(state, content) {
       state.newNote = content;
       state.notes.push(state.newNote);
-      console.log("add" + content);
-      console.log("add" + state.notes);
       axios.post("http://127.0.0.1:3000/notes", state.newNote);
       state.newNote = {};
     },

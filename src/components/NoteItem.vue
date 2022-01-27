@@ -1,108 +1,160 @@
 <template>
   <li>
     <div class="title-wrap">
-    <textarea class="title" v-model="note.title" :disabled="isEdit" :cols="note.title.length<36 ? 15:note.title.length" :rows="rowCalculate" ref="tit" /> 
-    <div class="title-wrap-controls">
-     <button v-if="!isTrash" class="pen" @click="editNote">
-      <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span v-if="!isEdit">&#10003;</span>
-    </button>
-    <button v-else class="pen finall" @click="deleteNoteFinal">
-      <img src="../assets/icons9-мусор.svg" alt="" v-if="isEdit" /><span v-if="!isEdit">&#10003;</span>
-    </button>
-    <button v-if="!isTrash" class="remove" @click="removeNote">&times;</button>
-     <button v-else class="remove restore" @click="removeNote">&#8593;</button>
-    <button class="imp" :class="[imp1, imp2, imp3]" :disabled="isEdit" @click="changeImportanceC">{{impMessage}}</button>
-     <!-- <p class="imp" :class="[imp1, imp2, imp3]">{{impMessage}}</p> -->
-     </div>
+      <textarea
+        class="title"
+        v-model="note.title"
+        v-if="!isEdit"
+        :cols="note.title.length < 36 ? 15 : note.title.length"
+        :rows="rowCalculate"
+        ref="tit"
+      />
+      <div v-if="isEdit" class="true-note-title">{{note.title}}</div>
+      <div class="title-wrap-controls">
+        <button v-if="!isTrash" class="pen" @click="editNote">
+          <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span
+            v-if="!isEdit"
+            >&#10003;</span
+          >
+        </button>
+        <button v-else class="pen finall" @click="deleteNoteFinal">
+          <img src="../assets/icons9-мусор.svg" alt="" v-if="isEdit" /><span
+            v-if="!isEdit"
+            >&#10003;</span
+          >
+        </button>
+        <button v-if="!isTrash" class="remove" @click="removeNote">
+          &times;
+        </button>
+        <button v-else class="remove restore" @click="removeNote">
+          &#8593;
+        </button>
+        <button
+          class="imp"
+          :class="[imp1, imp2, imp3]"
+          :disabled="isEdit"
+          @click="changeImportanceC"
+        >
+          {{ impMessage }}
+        </button>
+        <!-- <p class="imp" :class="[imp1, imp2, imp3]">{{impMessage}}</p> -->
+      </div>
     </div>
     <div class="line"></div>
-    <textarea ref="area"  :rows="note.body.length/24" class="body" v-model="note.body" :disabled="isEdit" />
+    <textarea
+      ref="area"
+      :rows="note.body.length / 24"
+      class="body"
+      v-model="note.body"
+      :disabled="isEdit"
+    />
     <div class="timedate">
-      <div >{{note.date}}</div>
-      <div >{{note.time}}</div>
+      <div>{{ note.date }}</div>
+      <div>{{ note.time }}</div>
     </div>
   </li>
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import { mapMutations } from "vuex";
 
 export default {
   data() {
     return {
-      isEdit:true,
-      wasEdited:false,
-      editCounter: 0
-    }
+      isEdit: true,
+      wasEdited: false,
+      editCounter: 0,
+    };
   },
   computed: {
     impMessage() {
       switch (this.note.importance) {
-        case 1: return "Очень важно"
-        case 2: return "Средневажно"
-        case 3: return "Маловажно"
-        default:return "Средневажно"
+        case 1:
+          return "Очень важно";
+        case 2:
+          return "Средневажно";
+        case 3:
+          return "Маловажно";
+        default:
+          return "Средневажно";
       }
     },
     rowCalculate() {
       switch (true) {
-        case (this.note.title.length<20): return 1
-        case (this.note.title.length>=20&&this.note.title.length<60): return 2
-        case (this.note.title.length>=60&&this.note.title.length<120): return this.note.title.length/25
-        case (this.note.title.length>=120): return this.note.title.length/33
-        default: return 1
+        case this.note.title.length < 20:
+          return 1;
+        case this.note.title.length >= 20 && this.note.title.length < 60:
+          return 2;
+        case this.note.title.length >= 60 && this.note.title.length < 120:
+          return this.note.title.length / 25;
+        case this.note.title.length >= 120:
+          return this.note.title.length / 33;
+        default:
+          return 1;
       }
     },
     imp1() {
-      if ( this.note.importance === 1) {
-        return "imp1"
-      } else {return false}
+      if (this.note.importance === 1) {
+        return "imp1";
+      } else {
+        return false;
+      }
       // this.note.importance === 1 ? 'imp1' : "",
     },
-     imp2() {
-       if ( this.note.importance === 2) {
-        return "imp2"
-       } else {return false}
+    imp2() {
+      if (this.note.importance === 2) {
+        return "imp2";
+      } else {
+        return false;
+      }
     },
-     imp3() {
-    if ( this.note.importance === 3) {
-        return "imp3"
-      } else {return false}
+    imp3() {
+      if (this.note.importance === 3) {
+        return "imp3";
+      } else {
+        return false;
+      }
     },
   },
   props: ["note", "isTrash"],
 
   methods: {
-   ...mapMutations(['deleteNote', 'editNotes', 'deleteNoteFinall', 'changeImportance', 'changePosition']),
+    ...mapMutations([
+      "deleteNote",
+      "editNotes",
+      "deleteNoteFinall",
+      "changeImportance",
+      "changePosition",
+    ]),
     removeNote() {
-      this.note.isDeleted = !this.note.isDeleted 
-      this.deleteNote(this.note)
+      this.note.isDeleted = !this.note.isDeleted;
+      this.deleteNote(this.note);
     },
     editNote() {
-      this.isEdit=!this.isEdit
-      this.editNotes(this.note)
-      setTimeout(()=> {
-           this.$refs.tit.focus()
-      },0)
+      this.isEdit = !this.isEdit;
+      this.editNotes(this.note);
+      setTimeout(() => {
+        this.$refs.tit.focus();
+      }, 0);
       if (this.wasEdited) {
-        console.log(this.wasEdited)
-        this.changePosition(this.note)
-        this.wasEdited=!this.wasEdited
-        this.editCounter=0
+        this.changePosition(this.note);
+        this.wasEdited = !this.wasEdited;
+        this.editCounter = 0;
       }
     },
-  deleteNoteFinal() {
-    this.deleteNoteFinall(this.note)
+    deleteNoteFinal() {
+      this.deleteNoteFinall(this.note);
+    },
+    changeImportanceC() {
+      this.changeImportance(this.note);
+
+      this.editCounter++;
+      this.editCounter % 3 === 0
+        ? (this.wasEdited = false)
+        : (this.wasEdited = true);
+    },
   },
-  changeImportanceC() {
-    this.changeImportance(this.note)
-    
-    this.editCounter++
-    this.editCounter%3===0 ? this.wasEdited = false : this.wasEdited = true; 
-    console.log(this.editCounter)
-  }
-  },
-}
+};
 </script>
 
 
@@ -123,18 +175,18 @@ li {
 }
 
 @media (max-width: 799px) {
-li {
-max-width: 43%;
-}
+  li {
+    max-width: 43%;
+  }
 }
 
 @media (max-width: 680px) {
-li {
-max-width: 340px;
-}
-textarea {
-  max-width: 300px;
-}
+  li {
+    max-width: 340px;
+  }
+  textarea {
+    max-width: 300px;
+  }
 }
 
 .line {
@@ -146,8 +198,8 @@ textarea {
 
 textarea {
   resize: none;
-    border: 1px solid rgb(191, 255, 230);
- border-radius: 3px;
+  border: 1px solid rgb(191, 255, 230);
+  border-radius: 3px;
   font-size: 16px;
   flex-grow: 1;
   cursor: pointer;
@@ -157,13 +209,13 @@ textarea {
 }
 
 textarea:disabled {
-border:none;
-border-radius: 3px; 
-vertical-align: top;
-resize: none;
-font-size: 18px;
-background: none;
-overflow: hidden;
+  border: none;
+  border-radius: 3px;
+  vertical-align: top;
+  resize: none;
+  font-size: 18px;
+  background: none;
+  overflow: hidden;
 }
 
 textarea:focus {
@@ -206,7 +258,7 @@ button:not(.imp) {
 }
 
 li:hover button {
-display: block;
+  display: block;
 }
 
 .number {
@@ -232,11 +284,11 @@ button:hover {
   vertical-align: center;
   line-height: 15px;
   transition: 0.2 ease-in-out;
-  margin-right:4px; 
-  margin-left: 3px; 
+  margin-right: 4px;
+  margin-left: 3px;
 }
 
-.pen>img {
+.pen > img {
   width: 10px;
   height: 10px;
 }
@@ -246,7 +298,7 @@ button:hover {
 }
 
 .finall {
-  border-color:red;
+  border-color: red;
 }
 
 input[disabled] {
@@ -267,8 +319,23 @@ input[disabled] {
   padding: 4px;
   color: rgb(46, 56, 58);
   vertical-align: middle;
-  min-height:20px;
+  min-height: 20px;
   /* width: 200px; */
+}
+
+.true-note-title {
+   margin-right: auto;
+  font-size: 16px;
+  font-weight: 600;
+  /* flex-grow: 1; */
+  cursor: pointer;
+  padding: 4px;
+  color: rgb(46, 56, 58);
+  vertical-align: middle;
+  min-height: 20px;
+   font-size: 20px;
+  font-weight: 600;
+  text-align: start;
 }
 
 .title:disabled {
@@ -306,39 +373,39 @@ input[disabled] {
 }
 
 .imp {
-width: 100px;
-padding: 0 1px;
-border: 1px solid black;
-border-radius: 10px;
-margin-left: 6px;
-font-size: 14px;
+  width: 100px;
+  padding: 0 1px;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-left: 6px;
+  font-size: 14px;
 }
 
 .imp1 {
-  color:rgb(211, 49, 49);
-  border-color:rgb(211, 49, 49); 
+  color: rgb(211, 49, 49);
+  border-color: rgb(211, 49, 49);
 }
 
 .imp1:disabled:hover {
- color:rgb(211, 49, 49);
+  color: rgb(211, 49, 49);
 }
 
 .imp2 {
-  color:rgb(168, 168, 24);
-   border-color:rgb(168, 168, 24); 
+  color: rgb(168, 168, 24);
+  border-color: rgb(168, 168, 24);
 }
 
 .imp2:hover {
-  background: rgb(168, 168, 24); 
+  background: rgb(168, 168, 24);
 }
 
 .imp2:disabled:hover {
- color:rgb(168, 168, 24);
+  color: rgb(168, 168, 24);
 }
 
 .imp3 {
-  color:rgb(51, 134, 100);
-  border-color:rgb(51, 134, 100); 
+  color: rgb(51, 134, 100);
+  border-color: rgb(51, 134, 100);
 }
 
 .imp3:hover {
@@ -346,21 +413,20 @@ font-size: 14px;
 }
 
 .imp3:disabled:hover {
- color:rgb(51, 134, 100);
+  color: rgb(51, 134, 100);
 }
 
 .imp:disabled:hover {
- background: none;
+  background: none;
 }
 
 .restore {
   color: rgb(51, 134, 100);
-  border-color:rgb(51, 134, 100);
+  border-color: rgb(51, 134, 100);
   font-size: 14px;
 }
 
 .restore:hover {
   background: rgb(51, 134, 100);
 }
-
 </style>
