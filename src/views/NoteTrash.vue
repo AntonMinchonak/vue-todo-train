@@ -1,6 +1,6 @@
 <template>
      <div class="note-trash">
-         <div class="trash-title">
+         <div class="trash-title-wrap">
            <router-link class="back" to="/notes"><button>&#8592;</button></router-link>
          <h1 class="trash-title">Корзина</h1>
     <button @click="clearAll" class="clear-all" >Очистить корзину</button>
@@ -41,15 +41,16 @@ created() {
 
 <style>
 
-.note-trash {
-    width: 800px;
-    margin:0 auto;
-}
 
 .trash-title {
     margin:0 auto;
-    margin-right: 156px;
-   
+    margin-right: 156px;   
+}
+
+@media (max-width: 799px) {
+.trash-title {
+    margin:0 auto;  
+}
 }
 
 .back {
@@ -59,18 +60,19 @@ created() {
 button {
   border: 1px solid rgb(35, 158, 111);
   background: none;
-  font-weight: 900;
+  /* font-weight: 900; */
   font-size: 20px;
   padding: 0 20px 4px;
   border-radius: 3px;
   cursor: pointer;
 }
 
-.trash-title {
+.trash-title-wrap {
     display:flex;
     justify-content: space-between;
     margin: 30px 0 0 0;
     align-items: center;
+    gap: 10px;
 }
 
 .clear-all {

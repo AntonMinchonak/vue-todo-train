@@ -1,10 +1,14 @@
 <template>
  <form >
     <router-link class="back" to="/note-create"><button>&#8592;</button></router-link>
-    <input type="date" name="" id="" v-model="date" />
-    <input type="time" name="" id="" v-model="time" />
+    <div class="date-time-flex">
+    <label class="datelabel" for="date">Введите дату: </label><input type="date" name="" id="date" v-model="date" /> 
+    </div>
+    <div class="date-time-flex">
+     <label class="datelabel" for="time">Введите время: </label><input type="time" name="" id="time" v-model="time" />
+     </div>
     <input type="submit" value="Далее" @click.prevent="queryInfo"/>
-    
+   
   </form>
 </template>
 
@@ -65,8 +69,6 @@ form {
   gap: 10px;
   justify-content: space-between;
   margin-bottom: 20px;
-  width: 800px;
-  margin: 0 auto;
 }
 
 input[type="submit"] {
@@ -97,7 +99,7 @@ cursor: pointer;
 button {
   border: 1px solid rgb(35, 158, 111);;
   background: none;
-  font-weight:900;
+  /* font-weight:900; */
   font-size: 20px;
   padding: 0 20px 4px ;
   border-radius: 3px;
@@ -106,5 +108,22 @@ button {
 
 input:not([type="submit"]) {
     padding: 10px;
+}
+
+.date-time-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+}
+
+#date, #time {
+  flex-grow: 1;
+
+}
+
+.datelabel {
+    width:16%;
+    text-align: start;
 }
 </style>

@@ -39,8 +39,7 @@ export default {
 
 <style scoped>
 .home {
-  width: 800px;
-  margin: 0 auto;
+
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -55,7 +54,7 @@ img {
 select {
   padding: 3px;
   align-self: start;
-  border: 1px solid rgb(223, 223, 223);
+  border: 1px solid rgb(178, 255, 226);
   padding: 5px;
   border-radius: 3px;
 }

@@ -64,7 +64,6 @@ export default {
 }
 
 .notes {
-  width: 800px;
   margin: 30px auto;
   display: flex;
   flex-direction: column;
@@ -80,7 +79,7 @@ span {
 
 select {
   padding: 3px;
-  border: 1px solid rgb(223, 223, 223);
+  border: 1px solid rgb(178, 255, 226);
   padding: 5px;
   border-radius: 3px;
   order: 1;
@@ -92,6 +91,10 @@ select {
   width: 25px;
   border: 1px solid rgb(35, 158, 111);
   border-radius: 3px;
+}
+
+.link-trash:hover {
+  background: rgb(10, 43, 29);;
 }
 
 .link-trash>img {

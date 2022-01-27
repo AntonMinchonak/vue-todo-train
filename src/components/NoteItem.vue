@@ -1,7 +1,8 @@
 <template>
   <li>
     <div class="title-wrap">
-    <textarea class="title" v-model="note.title" :disabled="isEdit" :cols="note.title.length<32 ? 15:note.title.length" :rows="rowCalculate" ref="tit" /> 
+    <textarea class="title" v-model="note.title" :disabled="isEdit" :cols="note.title.length<36 ? 15:note.title.length" :rows="rowCalculate" ref="tit" /> 
+    <div class="title-wrap-controls">
      <button v-if="!isTrash" class="pen" @click="editNote">
       <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span v-if="!isEdit">&#10003;</span>
     </button>
@@ -10,10 +11,12 @@
     </button>
     <button v-if="!isTrash" class="remove" @click="removeNote">&times;</button>
      <button v-else class="remove restore" @click="removeNote">&#8593;</button>
-    <p class="imp" :class="[imp1, imp2, imp3]">{{impMessage}}</p>
+    <button class="imp" :class="[imp1, imp2, imp3]" :disabled="isEdit" @click="changeImportanceC">{{impMessage}}</button>
+     <!-- <p class="imp" :class="[imp1, imp2, imp3]">{{impMessage}}</p> -->
+     </div>
     </div>
     <div class="line"></div>
-    <textarea ref="area"  :rows="note.body.length/32" class="body" v-model="note.body" :disabled="isEdit" />
+    <textarea ref="area"  :rows="note.body.length/24" class="body" v-model="note.body" :disabled="isEdit" />
     <div class="timedate">
       <div >{{note.date}}</div>
       <div >{{note.time}}</div>
@@ -27,7 +30,9 @@ import {mapMutations} from 'vuex'
 export default {
   data() {
     return {
-      isEdit:true
+      isEdit:true,
+      wasEdited:false,
+      editCounter: 0
     }
   },
   computed: {
@@ -68,7 +73,7 @@ export default {
   props: ["note", "isTrash"],
 
   methods: {
-   ...mapMutations(['deleteNote', 'editNotes', 'deleteNoteFinall']),
+   ...mapMutations(['deleteNote', 'editNotes', 'deleteNoteFinall', 'changeImportance', 'changePosition']),
     removeNote() {
       this.note.isDeleted = !this.note.isDeleted 
       this.deleteNote(this.note)
@@ -79,9 +84,22 @@ export default {
       setTimeout(()=> {
            this.$refs.tit.focus()
       },0)
+      if (this.wasEdited) {
+        console.log(this.wasEdited)
+        this.changePosition(this.note)
+        this.wasEdited=!this.wasEdited
+        this.editCounter=0
+      }
     },
   deleteNoteFinal() {
     this.deleteNoteFinall(this.note)
+  },
+  changeImportanceC() {
+    this.changeImportance(this.note)
+    
+    this.editCounter++
+    this.editCounter%3===0 ? this.wasEdited = false : this.wasEdited = true; 
+    console.log(this.editCounter)
   }
   },
 }
@@ -90,6 +108,7 @@ export default {
 
 <style scoped>
 li {
+  color: black;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -101,6 +120,21 @@ li {
   border-right: none;
   cursor: pointer;
   transition: 0.2s ease-in-out;
+}
+
+@media (max-width: 799px) {
+li {
+max-width: 43%;
+}
+}
+
+@media (max-width: 680px) {
+li {
+max-width: 340px;
+}
+textarea {
+  max-width: 300px;
+}
 }
 
 .line {
@@ -165,6 +199,9 @@ button {
   text-decoration-color: rgba(255, 0, 0, 0);
   transition: 0.3s ease-in-out;
   cursor: pointer;
+}
+
+button:not(.imp) {
   display: none;
 }
 
@@ -260,12 +297,12 @@ input[disabled] {
 .title-wrap {
   display: flex;
   align-items: center;
-  gap:0px;
   flex-wrap: wrap;
 }
 
-p {
-  font-size: 14px;
+.title-wrap-controls {
+  display: flex;
+  margin-left: auto;
 }
 
 .imp {
@@ -274,12 +311,16 @@ padding: 0 1px;
 border: 1px solid black;
 border-radius: 10px;
 margin-left: 6px;
+font-size: 14px;
 }
-
 
 .imp1 {
   color:rgb(211, 49, 49);
   border-color:rgb(211, 49, 49); 
+}
+
+.imp1:disabled:hover {
+ color:rgb(211, 49, 49);
 }
 
 .imp2 {
@@ -287,19 +328,39 @@ margin-left: 6px;
    border-color:rgb(168, 168, 24); 
 }
 
+.imp2:hover {
+  background: rgb(168, 168, 24); 
+}
+
+.imp2:disabled:hover {
+ color:rgb(168, 168, 24);
+}
+
 .imp3 {
   color:rgb(51, 134, 100);
   border-color:rgb(51, 134, 100); 
 }
 
+.imp3:hover {
+  background: rgb(51, 134, 100);
+}
+
+.imp3:disabled:hover {
+ color:rgb(51, 134, 100);
+}
+
+.imp:disabled:hover {
+ background: none;
+}
+
 .restore {
-  color: green;
-  border-color:green;
+  color: rgb(51, 134, 100);
+  border-color:rgb(51, 134, 100);
   font-size: 14px;
 }
 
 .restore:hover {
-  background: green;
+  background: rgb(51, 134, 100);
 }
 
 </style>

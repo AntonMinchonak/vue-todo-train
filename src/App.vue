@@ -26,6 +26,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin: 0 auto;
+  width:800px;
+}
+
+@media (max-width: 799px) {
+#app {
+max-width:100%;
+}
 }
 
 #nav {

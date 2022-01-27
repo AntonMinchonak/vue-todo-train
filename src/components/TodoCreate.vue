@@ -47,9 +47,7 @@ input[type="text"]:focus {
   border:1px solid rgb(35, 158, 111);
 }
 
-input[type="textfield"] {
-width: 100%;
-}
+
 
 form {
   display: flex;

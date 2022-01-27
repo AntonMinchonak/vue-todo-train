@@ -75,8 +75,6 @@ form {
   gap: 10px;
   justify-content: space-between;
   margin-bottom: 20px;
-  width: 800px;
-  margin: 0 auto;
 }
 
 label {
@@ -111,7 +109,7 @@ input[type="submit"]:hover {
 button {
   border: 1px solid rgb(35, 158, 111);
   background: none;
-  font-weight: 900;
+  /* font-weight: 900; */
   font-size: 20px;
   padding: 0 20px 4px;
   border-radius: 3px;

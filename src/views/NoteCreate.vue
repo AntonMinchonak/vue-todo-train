@@ -65,6 +65,8 @@ border-radius: 3px;
 font-size:  20px;
 }
 
+
+
 input[type="text"]:focus {
   outline: none;
   border:1px solid rgb(35, 158, 111);
@@ -92,9 +94,8 @@ textarea:focus {
   gap: 10px;
   justify-content: space-between;
   margin-bottom: 20px;
-  width: 800px;
-  margin: 0 auto;
 }
+
 
 input[type="submit"] {
 padding:10px 15px;
@@ -124,7 +125,7 @@ cursor: pointer;
 button {
   border: 1px solid rgb(35, 158, 111);;
   background: none;
-  font-weight:900;
+  
   font-size: 20px;
   padding: 0 20px 4px ;
   border-radius: 3px;

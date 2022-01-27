@@ -114,6 +114,13 @@ button {
   font-size: 16px;
   font-weight: bold;
   margin-right: 0;
+   padding: 0 3px;
+  margin-left: 9px;
+}
+
+.check {
+   margin-left: 9px;
+   color: rgb(0, 189, 116);
 }
 
 button:active {
@@ -151,7 +158,11 @@ input[disabled] {
   font-weight: 400;
   border: none;
   font-size: 18px;
-  color: rgb(15, 29, 32);
+  color: rgb(15, 29, 32) !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #240202 !important;
+  -webkit-opacity: 1 !important;
+  background: none !important ;
 }
 
 .title {
@@ -170,7 +181,19 @@ input[disabled] {
   cursor: text;
 }
 
-.number {
-  padding: 0 3px;
+
+.checkbox {
+display: none;
 }
+
+@media (max-width: 410px) {
+li {
+gap:10px;
+}
+
+.number, .check {
+  margin-left: 6px;
+}
+}
+
 </style>
