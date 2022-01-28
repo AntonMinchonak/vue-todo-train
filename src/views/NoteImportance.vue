@@ -1,8 +1,6 @@
 <template>
   <form>
-    <router-link class="back" to="/note-date"
-      ><button>&#8592;</button></router-link
-    >
+   <button class="back" @click.prevent="queryBack">&#8592;</button>
     <label for="important">Укажите важность заметки:</label>
     <select name="" id="important" v-model="importance">
       <option :value="1">Очень важно</option>
@@ -19,7 +17,7 @@ import {mapMutations} from "vuex"
 export default {
   data() {
     return {
-      importance: 1,
+      importance: parseInt(this.$route.query.importance) || 1,
       link: "",
     };
   },
@@ -42,7 +40,8 @@ export default {
             body: this.$route.query.body,
             date: this.$route.query.date,
             time: this.$route.query.time,
-            isDeleted: false
+            isDeleted: false,
+            id: Date.now()
           })
         this.$router.push({
           name: "Notes",
@@ -64,6 +63,21 @@ export default {
       }
       
     },
+      queryBack() {
+       
+           console.log(this.$router)
+      this.$router.push({
+        name:'noteDate',
+        query: {
+          time: this.$route.query.time,
+          date: this.$route.query.date,
+          title: this.$route.query.title,
+          body: this.$route.query.body,
+          importance: this.importance
+        },
+      })
+    
+       }
   },
 };
 </script>
@@ -109,14 +123,18 @@ input[type="submit"]:hover {
 button {
   border: 1px solid rgb(35, 158, 111);
   background: none;
-  /* font-weight: 900; */
+   color: rgb(35, 158, 111);
   font-size: 20px;
-  padding: 0 20px 4px;
+  padding: 2px 20px 2px;
   border-radius: 3px;
   cursor: pointer;
 }
 
 select {
   padding: 10px;
+  background: none;
+  color:rgb(57, 66, 62);
+  border: 1px solid rgb(35, 158, 111);
+  border-radius: 4px;
 }
 </style>

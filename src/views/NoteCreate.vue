@@ -13,8 +13,8 @@
 export default {
   data() {
     return {
-      value: "",
-      valueNote: "",
+      value: this.$route.query.title ,
+      valueNote: this.$route.query.body ,
       link:""
     };
   },
@@ -37,8 +37,11 @@ export default {
       this.$router.push({
         name:'noteDate',
         query: {
-          value: this.value,
-          valueNote: this.valueNote
+          title: this.value,
+          body: this.valueNote,
+          time: this.$route.query.time,
+          date: this.$route.query.date,
+          importance: this.$route.query.importance
         },
         params: {
           gayshit: 'u r'
@@ -120,14 +123,15 @@ cursor: pointer;
   margin-right: auto;
   cursor: pointer;
   margin-bottom: 20px;
+  color: black;
 }
 
 button {
-  border: 1px solid rgb(35, 158, 111);;
+  border: 1px solid rgb(35, 158, 111);
   background: none;
-  
+  color: rgb(35, 158, 111);
   font-size: 20px;
-  padding: 0 20px 4px ;
+  padding: 2px 20px 2px ;
   border-radius: 3px;
   /* margin-bottom: 20px; */
   cursor: pointer;

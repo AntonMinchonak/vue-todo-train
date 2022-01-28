@@ -57,5 +57,7 @@ select {
   border: 1px solid rgb(178, 255, 226);
   padding: 5px;
   border-radius: 3px;
+  background: none;
+  color: rgb(60, 68, 65);
 }
 </style>

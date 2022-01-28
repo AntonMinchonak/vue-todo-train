@@ -137,7 +137,7 @@ button:hover {
 
 .pen {
   border-color: rgb(35, 158, 111);
-  width: 20px;
+  min-width: 20px;
   height: 20px;
   background: white;
   color: rgb(35, 158, 111);
@@ -191,7 +191,6 @@ input[disabled] {
   cursor: pointer;
   padding: 4px;
   color: rgb(31, 41, 41);
-  opacity: 1;
   text-align: start;
 }
 
@@ -199,13 +198,33 @@ input[disabled] {
 display: none;
 }
 
-@media (max-width: 410px) {
+@media (max-width: 440px) {
 li {
 gap:10px;
 }
 
 .number, .check {
   margin-left: 6px;
+}
+
+
+  button {
+  width: 39px;
+  height: 39px;
+}
+  .pen {
+  width: 39px;
+  height: 39px;
+}
+
+.title-true {
+  flex-grow:0;
+  width: 200px;
+}
+
+.title {
+  flex-grow:0;
+  width: 180px;
 }
 }
 

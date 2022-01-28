@@ -4,7 +4,7 @@ export default {
   actions: {
     retriveTodos(ctx) {
       axios
-        .get("http://127.0.0.1:3000/products")
+        .get("http://10.20.5.50:3000/products" || "http://127.0.0.1:3000/products")
         .then((res) => res.data)
         .then((res) => {
           res = res.reverse();
@@ -45,13 +45,13 @@ export default {
       state.todos.unshift(newTodo);
       console.log(state.todos);
       for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
-      axios.post("http://127.0.0.1:3000/products", newTodo);
+      axios.post("http://10.20.5.50:3000/products" || "http://127.0.0.1:3000/products", newTodo);
     },
     deleteTodo(state, todo) {
       if (!state.isError) {
         state.todos = state.todos.filter((el) => el._id !== todo._id);
         for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
-        axios.delete(`http://127.0.0.1:3000/products/${todo._id}`);
+        axios.delete(`http://10.20.5.50:3000/products/${todo._id}` || `http://127.0.0.1:3000/products/${todo._id}`);
       } else {
         state.todos = state.todos.filter((el) => el.id !== todo.id);
         for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
@@ -66,7 +66,7 @@ export default {
         state.todos.splice(0, 0, sliced);
       } else { state.todos.splice(state.todos.length, 0, sliced); }
       for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
-      axios.put(`http://127.0.0.1:3000/products/${item._id}`, item);
+      axios.put(`http://10.20.5.50:3000/products/${item._id}`||`http://127.0.0.1:3000/products/${item._id}`, item);
     },
     filterList(state, filter) {
       state.filter = filter;
@@ -82,7 +82,7 @@ export default {
         for (let i = 0; i < state.todos.length; i++) {
           if (state.todos[i]._id === item._id) state.todos[i].title = item.title;
         }
-        axios.put(`http://127.0.0.1:3000/products/${item._id}`, item);
+        axios.put(`http://10.20.5.50:3000/products/${item._id}` || `http://127.0.0.1:3000/products/${item._id}`, item);
       } else {
          for (let i = 0; i < state.todos.length; i++) {
            if (state.todos[i].id === item.id) state.todos[i].title = item.title;

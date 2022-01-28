@@ -2,7 +2,7 @@
     <div>
        <Spinner v-if="!getLoad" />
         <ul v-else>
-           <transition-group class="anime" name="list-complete" tag="p">
+           <transition-group class="anime" name="list-complete" tag="div">
             <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" />
            </transition-group>
         </ul>

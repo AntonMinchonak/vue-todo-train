@@ -14,6 +14,7 @@
 export default {
  mounted() {
       this.$store.dispatch("retriveTodos")
+      this.$store.dispatch("retriveNotes");
   },
 }
 </script>

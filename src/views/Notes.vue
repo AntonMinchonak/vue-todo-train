@@ -39,19 +39,19 @@ export default {
     queryInfo() {
       this.$router.push({
         name: "noteCreate",
-        query: {
-          suka: "pziaed",
-        },
-        params: {
-          gayshit: "i am",
-        },
+    //     query: {
+    //       1wq23: "213wq",
+    //     },
+    //     params: {
+    //       gayshit: "i am",
+    //     },
       });
     },
   },
-  created() {
-    this.$store.dispatch("retriveNotes");
+  // created() {
+  //   this.$store.dispatch("retriveNotes");
      
-  },
+  // },
 };
 </script>
 
@@ -83,6 +83,7 @@ select {
   padding: 5px;
   border-radius: 3px;
   order: 1;
+  background: none;color: rgb(60, 68, 65);
 }
 
 .link-trash {
@@ -117,5 +118,12 @@ button {
 
 .link {
   margin-right: auto;
+}
+
+@media (max-width: 680px) {
+  .link-trash {
+  width: 30px;
+  height: 30px;
+}
 }
 </style>

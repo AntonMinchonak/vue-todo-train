@@ -2,9 +2,9 @@
     <div>
        <Spinner v-if="!getLoad" />
         <ul v-else>
-              <!-- <transition-group class="anime" name="list-complete" tag="p"> -->
+              <transition-group class="anime" name="list-complete" tag="p">
             <NoteItem class="itemN" v-for="note in notes" :key="note.id" :note="note" :isTrash="isTrash" />
-            <!-- </transition-group> -->
+            </transition-group>
         </ul>
         <p v-if="!notes.length&&!isTrash&&!getError">Список задач пуст. Наконец-то ты свободен.</p>
         <p v-else-if="!notes.length&&isTrash&&!getError">Корзина пуста.</p>
@@ -53,9 +53,9 @@ ul>.itemN:last-child {
 }
 }
 
-/* 
+
 .list-complete-item {
-  transition: all 3s;
+  transition: all 1s;
   display: inline-block;
   margin-right: 10px;
 }
@@ -67,8 +67,19 @@ ul>.itemN:last-child {
   position: absolute;
 }
 .anime {
-display:flex;
-flex-direction: column;
-gap: 10px;
-} */
+list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0px;
+    gap: 20px; 
+    row-gap: 30px;
+    margin: 0;
+    margin-top: 10px;
+  justify-content: space-evenly;
+
+}
+
+.anime>.itemN:last-child {
+  margin-right:auto;
+}
 </style>

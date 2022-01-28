@@ -32,7 +32,7 @@
         <button
           class="imp"
           :class="[imp1, imp2, imp3]"
-          :disabled="isEdit"
+          
           @click="changeImportanceC"
         >
           {{ impMessage }}
@@ -78,20 +78,6 @@ export default {
           return "Маловажно";
         default:
           return "Средневажно";
-      }
-    },
-    rowCalculate() {
-      switch (true) {
-        case this.note.title.length < 20:
-          return 1;
-        case this.note.title.length >= 20 && this.note.title.length < 60:
-          return 2;
-        case this.note.title.length >= 60 && this.note.title.length < 120:
-          return this.note.title.length / 25;
-        case this.note.title.length >= 120:
-          return this.note.title.length / 33;
-        default:
-          return 1;
       }
     },
     imp1() {
@@ -148,7 +134,9 @@ export default {
     },
     changeImportanceC() {
       this.changeImportance(this.note);
-
+      if(this.isEdit) {
+       this.changePosition(this.note);
+      }
       this.editCounter++;
       this.editCounter % 3 === 0
         ? (this.wasEdited = false)
@@ -173,21 +161,8 @@ li {
   border-right: none;
   cursor: pointer;
   transition: 0.2s ease-in-out;
-}
-
-@media (max-width: 799px) {
-  li {
-    max-width: 43%;
-  }
-}
-
-@media (max-width: 680px) {
-  li {
-    max-width: 340px;
-  }
-  textarea {
-    max-width: 300px;
-  }
+  border-radius: 4px;
+  box-shadow: 0px 2px 5px 2px rgba(34, 41, 39, 0.1);
 }
 
 .line {
@@ -436,5 +411,34 @@ input[disabled] {
 
 .restore:hover {
   background: rgb(51, 134, 100);
+}
+
+@media (max-width: 799px) {
+  li {
+    max-width: 43%;
+  }
+}
+
+@media (max-width: 680px) {
+  li {
+    max-width: 340px;
+  }
+  textarea {
+    max-width: 300px;
+  }
+
+  button:not(.imp) {
+  display: block;
+}
+button {
+  height:44px;
+  border-radius: 10px;
+}
+
+
+
+button:not(.imp) {
+  width:44px;
+}
 }
 </style>

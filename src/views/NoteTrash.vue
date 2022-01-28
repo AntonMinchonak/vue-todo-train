@@ -58,7 +58,7 @@ button {
   background: none;
   /* font-weight: 900; */
   font-size: 20px;
-  padding: 0 20px 4px;
+  padding: 2px 20px 2px;
   border-radius: 3px;
   cursor: pointer;
 }
@@ -87,6 +87,15 @@ button {
 
 .clear-all {
     padding: 5px 10px;
+}
+}
+
+@media (max-width: 420px) {
+
+
+.clear-all {
+    padding: 5px 0px;
+    width: 100px;
 }
 }
 </style>
