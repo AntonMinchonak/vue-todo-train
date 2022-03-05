@@ -25,6 +25,9 @@ export default {
       filterNote: "All",
     };
   },
+  created() {
+      this.$store.dispatch("retriveNotes");
+  },
   components: {
     NoteList,
   },
@@ -39,19 +42,10 @@ export default {
     queryInfo() {
       this.$router.push({
         name: "noteCreate",
-    //     query: {
-    //       1wq23: "213wq",
-    //     },
-    //     params: {
-    //       gayshit: "i am",
-    //     },
+   
       });
     },
   },
-  // created() {
-  //   this.$store.dispatch("retriveNotes");
-     
-  // },
 };
 </script>
 

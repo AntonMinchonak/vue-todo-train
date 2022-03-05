@@ -9,7 +9,7 @@
         :rows="rowCalculate"
         ref="tit"
       />
-      <div v-if="isEdit" class="true-note-title">{{note.title}}</div>
+      <div v-if="isEdit" class="true-note-title">{{ note.title }}</div>
       <div class="title-wrap-controls">
         <button v-if="!isTrash" class="pen" @click="editNote">
           <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span
@@ -32,12 +32,10 @@
         <button
           class="imp"
           :class="[imp1, imp2, imp3]"
-          
           @click="changeImportanceC"
         >
           {{ impMessage }}
         </button>
-        <!-- <p class="imp" :class="[imp1, imp2, imp3]">{{impMessage}}</p> -->
       </div>
     </div>
     <div class="line"></div>
@@ -48,7 +46,7 @@
       v-model="note.body"
       v-if="!isEdit"
     />
-    <div v-if="isEdit" class="true-body">{{note.body}}</div>
+    <div v-if="isEdit" class="true-body">{{ note.body }}</div>
     <div class="timedate">
       <div>{{ note.date }}</div>
       <div>{{ note.time }}</div>
@@ -86,7 +84,6 @@ export default {
       } else {
         return false;
       }
-      // this.note.importance === 1 ? 'imp1' : "",
     },
     imp2() {
       if (this.note.importance === 2) {
@@ -134,8 +131,8 @@ export default {
     },
     changeImportanceC() {
       this.changeImportance(this.note);
-      if(this.isEdit) {
-       this.changePosition(this.note);
+      if (this.isEdit) {
+        this.changePosition(this.note);
       }
       this.editCounter++;
       this.editCounter % 3 === 0
@@ -195,7 +192,7 @@ textarea:disabled {
 }
 
 .true-body {
-   font-size: 18px;
+  font-size: 18px;
   overflow: hidden;
   text-align: start;
 }
@@ -306,7 +303,7 @@ input[disabled] {
 }
 
 .true-note-title {
-   margin-right: auto;
+  margin-right: auto;
   font-size: 16px;
   font-weight: 600;
   /* flex-grow: 1; */
@@ -315,7 +312,7 @@ input[disabled] {
   color: rgb(46, 56, 58);
   vertical-align: middle;
   min-height: 20px;
-   font-size: 20px;
+  font-size: 20px;
   font-weight: 600;
   text-align: start;
 }
@@ -347,7 +344,7 @@ input[disabled] {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap:10px;
+  gap: 10px;
 }
 
 .title-wrap-controls {
@@ -428,17 +425,15 @@ input[disabled] {
   }
 
   button:not(.imp) {
-  display: block;
-}
-button {
-  height:44px;
-  border-radius: 10px;
-}
+    display: block;
+  }
+  button {
+    height: 44px;
+    border-radius: 10px;
+  }
 
-
-
-button:not(.imp) {
-  width:44px;
-}
+  button:not(.imp) {
+    width: 44px;
+  }
 }
 </style>

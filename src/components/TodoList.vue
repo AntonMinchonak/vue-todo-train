@@ -1,40 +1,45 @@
 <template>
-    <div>
-       <Spinner v-if="!getLoad" />
-        <ul v-else>
-           <transition-group class="anime" name="list-complete" tag="div">
-            <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" />
-           </transition-group>
-        </ul>
-        <p v-if="!todos.length&&!getError">Список задач пуст. Наконец-то ты свободен.</p>
-        <p v-if="getError">Ошибка! Не удалось загрузить данные сервера, но вы можете продолжить работать оффлайн.</p>
-    </div>
+  <div>
+    <Spinner v-if="!getLoad" />
+    <ul v-else>
+      <transition-group class="anime" name="list-complete" tag="div">
+        <TodoItem v-for="todo in todos" :key="todo.id" :todo="todo" />
+      </transition-group>
+    </ul>
+    <p v-if="!todos.length && !getError">
+      Список задач пуст. Наконец-то ты свободен.
+    </p>
+    <p v-if="getError">
+      Ошибка! Не удалось загрузить данные сервера, но вы можете продолжить
+      работать оффлайн.
+    </p>
+  </div>
 </template>
 
 <script>
-import TodoItem from '@/components/TodoItem.vue'
-import Spinner from '@/components/Spinner.vue'
+import TodoItem from "@/components/TodoItem.vue";
+import Spinner from "@/components/Spinner.vue";
 import { mapGetters } from "vuex";
 
 export default {
-  computed: mapGetters(['getLoad','getError']),
+  computed: mapGetters(["getLoad", "getError"]),
   components: {
     TodoItem,
-    Spinner
+    Spinner,
   },
   props: ["todos"],
-}
+};
 </script>
 
 
 <style scoped>
 ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    padding: 0px;
-    gap: 10px; 
-    margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  gap: 10px;
+  margin: 0;
 }
 
 .list-complete-item {
@@ -42,8 +47,8 @@ ul {
   display: inline-block;
   margin-right: 10px;
 }
-.list-complete-enter, .list-complete-leave-to
-/* .list-complete-leave-active до версии 2.1.8 */ {
+.list-complete-enter,
+.list-complete-leave-to {
   opacity: 0;
   transform: translateY(50px);
 }
@@ -51,8 +56,8 @@ ul {
   position: absolute;
 }
 .anime {
-display:flex;
-flex-direction: column;
-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 </style>

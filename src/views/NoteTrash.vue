@@ -1,56 +1,52 @@
 <template>
-     <div class="note-trash">
-         <div class="trash-title-wrap">
-           <router-link class="back" to="/notes"><button>&#8592;</button></router-link>
-         <h1 class="trash-title">Корзина</h1>
-    <button @click="clearAll" class="clear-all" >Очистить корзину</button>
-         </div>
-     <NoteList :notes="allDeletedNotes" :isTrash="isTrash"/>
-     </div>
+  <div class="note-trash">
+    <div class="trash-title-wrap">
+      <router-link class="back" to="/notes"
+        ><button>&#8592;</button></router-link
+      >
+      <h1 class="trash-title">Корзина</h1>
+      <button @click="clearAll" class="clear-all">Очистить корзину</button>
+    </div>
+    <NoteList :notes="allDeletedNotes" :isTrash="isTrash" />
+  </div>
 </template>
 
 <script>
-
 import NoteList from "@/components/NoteList.vue";
-import {mapGetters, mapMutations} from "vuex"
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
-    data(){
-        return {
-            isTrash: true
-        }
-    },
-computed: {
-    ...mapGetters(['allDeletedNotes']),
-},
-components: {
-    NoteList
-},
-methods: {
-    ...mapMutations(['removeAll']),
+  data() {
+    return {
+      isTrash: true,
+    };
+  },
+  computed: {
+    ...mapGetters(["allDeletedNotes"]),
+  },
+  components: {
+    NoteList,
+  },
+  methods: {
+    ...mapMutations(["removeAll"]),
     clearAll() {
-        this.removeAll()
-    }
-},
-created() {
-      this.$store.dispatch("retriveNotes");
-}
-
-}
+      this.removeAll();
+    },
+  },
+  created() {
+    this.$store.dispatch("retriveNotes");
+  },
+};
 </script>
 
 <style>
-
-
 .trash-title {
-    margin:0 auto;
-    margin-right: 156px;   
+  margin: 0 auto;
+  margin-right: 156px;
 }
-
 
 .back {
   cursor: pointer;
- 
 }
 
 button {
@@ -64,38 +60,35 @@ button {
 }
 
 .trash-title-wrap {
-    display:flex;
-    justify-content: space-between;
-    margin: 30px 0 0 0;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0 0 0;
+  align-items: center;
+  gap: 10px;
 }
 
 .clear-all {
-    font-size: 16px;
-    padding: 10px 15px;
-    background: rgb(35, 158, 111);
-    color: white;
-    font-weight: 600;
+  font-size: 16px;
+  padding: 10px 15px;
+  background: rgb(35, 158, 111);
+  color: white;
+  font-weight: 600;
 }
-
 
 @media (max-width: 799px) {
-.trash-title {
-    margin:0 auto;  
-}
+  .trash-title {
+    margin: 0 auto;
+  }
 
-.clear-all {
+  .clear-all {
     padding: 5px 10px;
-}
+  }
 }
 
 @media (max-width: 420px) {
-
-
-.clear-all {
+  .clear-all {
     padding: 5px 0px;
     width: 100px;
-}
+  }
 }
 </style>

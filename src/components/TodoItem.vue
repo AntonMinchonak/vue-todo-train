@@ -1,6 +1,9 @@
 <template>
-
-  <li @click="changeTodoStatement" :class="{ complete: todo.completed }" :aria-disabled="!isEdit">
+  <li
+    @click="changeTodoStatement"
+    :class="{ complete: todo.completed }"
+    :aria-disabled="!isEdit"
+  >
     <input
       class="checkbox"
       type="checkbox"
@@ -19,7 +22,7 @@
       ref="tit"
       @keyup.enter="editTitle"
     />
-    <div v-if="isEdit" class="title-true">{{todo.title}}</div>
+    <div v-if="isEdit" class="title-true">{{ todo.title }}</div>
     <button class="pen" @click="editTitle">
       <img src="../assets/pen.svg" alt="" v-if="isEdit" /><span v-if="!isEdit"
         >&#10003;</span
@@ -27,7 +30,6 @@
     </button>
     <button class="remove" @click="removeTodo">&times;</button>
   </li>
-  
 </template>
 
 <script>
@@ -40,29 +42,30 @@ export default {
   props: ["todo"],
   methods: {
     ...mapMutations(["deleteTodo", "changeTodoStatementStore", "editedTodo"]),
+
     changeTodoStatement(event) {
       if (event.target.classList.contains("checkbox"))
         this.changeTodoStatementStore(this.todo.order);
       if (
         event.target.tagName !== "BUTTON" &&
-        event.target.tagName !== "IMG"&&
-        event.target.tagName !== "INPUT"&&
-        event.target.tagName !== "SPAN"&&
+        event.target.tagName !== "IMG" &&
+        event.target.tagName !== "INPUT" &&
+        event.target.tagName !== "SPAN" &&
         !event.target.ariaDisabled
       )
         this.changeTodoStatementStore(this.todo);
     },
     removeTodo() {
-      
+
       this.deleteTodo(this.todo);
     },
     editTitle() {
+ 
       this.isEdit = !this.isEdit;
-      setInterval(()=>{
-        this.$refs.tit.focus()
-      },0)
-        this.editedTodo(this.todo)
-      
+      setInterval(() => {
+        this.$refs.tit.focus();
+      }, 0);
+      this.editedTodo(this.todo);
     },
   },
 };
@@ -117,13 +120,13 @@ button {
   font-size: 16px;
   font-weight: bold;
   margin-right: 0;
-   padding: 0 3px;
+  padding: 0 3px;
   margin-left: 9px;
 }
 
 .check {
-   margin-left: 9px;
-   color: rgb(0, 189, 116);
+  margin-left: 9px;
+  color: rgb(0, 189, 116);
 }
 
 button:active {
@@ -167,7 +170,7 @@ input[disabled] {
   border: 1px solid rgb(191, 255, 230);
   margin-right: auto;
   font-size: 16px;
-  flex-grow:1;
+  flex-grow: 1;
   font-weight: 600;
   cursor: pointer;
   padding: 4px;
@@ -180,13 +183,13 @@ input[disabled] {
 }
 
 .title-true {
-   background: none;
+  background: none;
   font-weight: 400;
   border: none;
   font-size: 18px;
   margin-right: auto;
   font-size: 16px;
-  flex-grow:1;
+  flex-grow: 1;
   font-weight: 600;
   cursor: pointer;
   padding: 4px;
@@ -195,37 +198,36 @@ input[disabled] {
 }
 
 .checkbox {
-display: none;
+  display: none;
 }
 
 @media (max-width: 440px) {
-li {
-gap:10px;
-}
+  li {
+    gap: 10px;
+  }
 
-.number, .check {
-  margin-left: 6px;
-}
-
+  .number,
+  .check {
+    margin-left: 6px;
+  }
 
   button {
-  width: 39px;
-  height: 39px;
-}
+    width: 39px;
+    height: 39px;
+  }
   .pen {
-  width: 39px;
-  height: 39px;
-}
+    width: 39px;
+    height: 39px;
+  }
 
-.title-true {
-  flex-grow:0;
-  width: 200px;
-}
+  .title-true {
+    flex-grow: 0;
+    width: 200px;
+  }
 
-.title {
-  flex-grow:0;
-  width: 180px;
+  .title {
+    flex-grow: 0;
+    width: 180px;
+  }
 }
-}
-
 </style>

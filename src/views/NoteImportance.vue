@@ -1,6 +1,6 @@
 <template>
   <form>
-   <button class="back" @click.prevent="queryBack">&#8592;</button>
+    <button class="back" @click.prevent="queryBack">&#8592;</button>
     <label for="important">Укажите важность заметки:</label>
     <select name="" id="important" v-model="importance">
       <option :value="1">Очень важно</option>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex"
+import { mapMutations } from "vuex";
 
 export default {
   data() {
@@ -22,62 +22,36 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['addNote']),
-    // onFormSubmit() {
-    //     if (this.importance) {
-    //         this.link = "/notes"
-    //     this.newNoteImportance({
-    //         importance: this.importance,
-    //         id: Date.now()
-    //     })
-    //     }
-    // },
+    ...mapMutations(["addNote"]),
     queryInfo() {
       if (this.importance) {
         this.addNote({
-            importance: this.importance,
-            title: this.$route.query.title,
-            body: this.$route.query.body,
-            date: this.$route.query.date,
-            time: this.$route.query.time,
-            isDeleted: false,
-            id: Date.now()
-          })
+          importance: this.importance,
+          title: this.$route.query.title,
+          body: this.$route.query.body,
+          date: this.$route.query.date,
+          time: this.$route.query.time,
+          isDeleted: false,
+          id: Date.now(),
+        });
         this.$router.push({
           name: "Notes",
-          // query: {
-          //   importance: this.importance,
-          //   title: this.$route.query.title,
-          //   body: this.$route.query.body,
-          //   date: this.$route.query.date,
-          //   time: this.$route.query.time,
-          // },
-          params: {
-            gayshit: "we r",
-          },
         });
-        //    this.newNoteImportance({
-        //         importance: this.importance,
-        //         id: Date.now()
-        //     })
       }
-      
+       this.$store.dispatch("retriveNotes");
     },
-      queryBack() {
-       
-           console.log(this.$router)
+    queryBack() {
       this.$router.push({
-        name:'noteDate',
+        name: "noteDate",
         query: {
           time: this.$route.query.time,
           date: this.$route.query.date,
           title: this.$route.query.title,
           body: this.$route.query.body,
-          importance: this.importance
+          importance: this.importance,
         },
-      })
-    
-       }
+      });
+    },
   },
 };
 </script>
@@ -123,7 +97,7 @@ input[type="submit"]:hover {
 button {
   border: 1px solid rgb(35, 158, 111);
   background: none;
-   color: rgb(35, 158, 111);
+  color: rgb(35, 158, 111);
   font-size: 20px;
   padding: 2px 20px 2px;
   border-radius: 3px;
@@ -133,7 +107,7 @@ button {
 select {
   padding: 10px;
   background: none;
-  color:rgb(57, 66, 62);
+  color: rgb(57, 66, 62);
   border: 1px solid rgb(35, 158, 111);
   border-radius: 4px;
 }

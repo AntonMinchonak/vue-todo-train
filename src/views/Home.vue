@@ -14,32 +14,31 @@
 <script>
 import TodoList from "@/components/TodoList.vue";
 import TodoCreate from "@/components/TodoCreate.vue";
-import {mapGetters, mapMutations} from 'vuex';
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "Home",
   data() {
-    return { filterHome: 'All' }
+    return { filterHome: "All" };
   },
   components: {
     TodoList,
     TodoCreate,
   },
   computed: {
-    ...mapGetters(['allTodos']),
+    ...mapGetters(["allTodos"]),
   },
   methods: {
-    ...mapMutations(['filterList']),
-    changeFilter () {
-      this.filterList(this.filterHome)
-    }
-  }
+    ...mapMutations(["filterList"]),
+    changeFilter() {
+      this.filterList(this.filterHome);
+    },
+  },
 };
 </script>
 
 <style scoped>
 .home {
-
   display: flex;
   flex-direction: column;
   gap: 10px;
