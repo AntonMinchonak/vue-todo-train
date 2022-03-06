@@ -1,15 +1,21 @@
 <template>
   <div class="notes">
     <div class="controls">
-    <router-link class="link-trash" to="/note-trash"><img src="../assets/icons8-мусор.svg" alt=""></router-link> 
-    <select name="" id="" v-model="filterNote" @change="changeFilter">
-      <option value="All">All</option>
-      <option value="Very">Очень важные</option>
-      <option value="Medium">Средневажные</option>
-          <option value="Low">Маловажные</option>
-    </select>
-    <button @click="queryInfo"><span>+</span>Create Note</button>
-</div>
+      <router-link class="link-trash" to="/note-trash"
+        ><img src="../assets/icons8-мусор.svg" alt=""
+      /></router-link>
+      <select name="" id="" v-model="filterNote" @change="changeFilter">
+        <option value="All">All</option>
+        <option value="Very">Очень важные</option>
+        <option value="Medium">Средневажные</option>
+        <option value="Low">Маловажные</option>
+      </select>
+        <select name="" id="" v-model="sortNote" @change="changeSort">
+        <option value="dateTime">Приоритет даты и времени</option>
+        <option value="creaeted">Приоритет времени создания</option>
+      </select>
+      <button @click="queryInfo"><span>+</span>Create Note</button>
+    </div>
     <NoteList :notes="allNotes" />
   </div>
 </template>
@@ -23,10 +29,11 @@ export default {
   data() {
     return {
       filterNote: "All",
+      sortNote: "dateTime",
     };
   },
   created() {
-      this.$store.dispatch("retriveNotes");
+    this.$store.dispatch("retriveNotes");
   },
   components: {
     NoteList,
@@ -35,14 +42,16 @@ export default {
     ...mapGetters(["allNotes"]),
   },
   methods: {
-    ...mapMutations(["filterNotes"]),
+    ...mapMutations(["filterNotes","sortNotes"]),
     changeFilter() {
       this.filterNotes(this.filterNote);
+    },
+    changeSort() {
+      this.sortNotes(this.sortNote);
     },
     queryInfo() {
       this.$router.push({
         name: "noteCreate",
-   
       });
     },
   },
@@ -77,11 +86,12 @@ select {
   padding: 5px;
   border-radius: 3px;
   order: 1;
-  background: none;color: rgb(60, 68, 65);
+  background: none;
+  color: rgb(60, 68, 65);
 }
 
 .link-trash {
-  order:1;
+  order: 1;
   height: 25px;
   width: 25px;
   border: 1px solid rgb(35, 158, 111);
@@ -90,12 +100,12 @@ select {
 }
 
 .link-trash:hover {
-  background: rgb(10, 43, 29);;
+  background: rgb(10, 43, 29);
 }
 
-.link-trash>img {
+.link-trash > img {
   height: 16px;
- margin:auto auto;
+  margin: auto auto;
 }
 
 button {
@@ -116,8 +126,8 @@ button {
 
 @media (max-width: 680px) {
   .link-trash {
-  width: 30px;
-  height: 30px;
-}
+    width: 30px;
+    height: 30px;
+  }
 }
 </style>

@@ -10,7 +10,13 @@ export default {
           res = res.reverse();
           let completedList = res.filter((el) => el.completed);
           completedList = completedList.reverse();
+          completedList.sort((a, b) => {
+            return b.id - a.id;
+          });
           let uncompletedList = res.filter((el) => !el.completed);
+           uncompletedList.sort((a, b) => {
+             return b.id - a.id;
+           });
           //   uncompletedList= uncompletedList.concat(completedList);
           let preTodos = [...uncompletedList, ...completedList];
           //   for (let i = 0; i < preTodos.length; i++) {

@@ -10,9 +10,21 @@ export default {
           let veryList = res.filter((el) => el.importance === 1);
           let midList = res.filter((el) => el.importance === 2);
           let lowList = res.filter((el) => el.importance === 3);
+
+          function listSorter(a, b) {
+            if (parseInt(b.date.replace("-", "")) !== parseInt(a.date.replace("-", ""))) {
+              return parseInt(b.date.replace("-", "")) - parseInt(a.date.replace("-", ""));
+            } else if (parseInt(b.time.replace(":", "")) !== parseInt(a.time.replace(":", ""))) {
+              return parseInt(b.time.replace(":", "")) - parseInt(a.time.replace(":", ""));
+            } else { return b.id - a.id }
+
+          }
+          veryList.sort(listSorter);
+          midList.sort(listSorter);
+          lowList.sort(listSorter);
+
           const notes = [...veryList, ...midList, ...lowList];
           ctx.commit("updateNotes", notes);
-
           ctx.commit("changeLoadState");
         })
         .catch((err) => {
@@ -34,7 +46,7 @@ export default {
       if (state.newNote.importance === 1) veryList.unshift(state.newNote);
       if (state.newNote.importance === 2) midList.unshift(state.newNote);
       if (state.newNote.importance === 3) lowList.unshift(state.newNote);
-     state.notes = [...veryList, ...midList, ...lowList];
+      state.notes = [...veryList, ...midList, ...lowList];
       axios.post(`http://192.168.0.100:3000/notes` || "http://10.20.5.50:3000/notes" || "http://127.0.0.1:3000/notes", state.newNote);
       state.newNote = {};
     },
@@ -56,6 +68,34 @@ export default {
     },
     filterNotes(state, filter) {
       state.filterNote = filter;
+    },
+    sortNotes(state, sort) {
+      let veryList = state.notes.filter((el) => el.importance === 1);
+      let midList = state.notes.filter((el) => el.importance === 2);
+      let lowList = state.notes.filter((el) => el.importance === 3);
+        function listSorter(a, b) {
+          if (parseInt(b.date.replace("-", "")) !== parseInt(a.date.replace("-", ""))) {
+            return parseInt(b.date.replace("-", "")) - parseInt(a.date.replace("-", ""));
+          }
+          return parseInt(b.time.replace(":", "")) - parseInt(a.time.replace(":", ""));
+        }
+
+      if (sort === "dateTime") {
+         veryList.sort(listSorter);
+         midList.sort(listSorter);
+         lowList.sort(listSorter);
+      } else {
+        veryList.sort((a, b) => {
+          return b.id - a.id;
+        });
+        midList.sort((a, b) => {
+          return b.id - a.id;
+        });
+        lowList.sort((a, b) => {
+          return b.id - a.id;
+        });
+      }
+      state.notes = [...veryList, ...midList, ...lowList];
     },
     changeLoadState(state) {
       state.isLoadedNotes = true;
@@ -106,6 +146,7 @@ export default {
     notes: [],
     newNote: {},
     filterNote: "All",
+    sortNote: "dateTime",
     isLoadedNotes: false,
     isErrorNote: false,
   },
