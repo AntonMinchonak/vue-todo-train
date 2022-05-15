@@ -4,7 +4,7 @@ export default {
   actions: {
     retriveTodos(ctx) {
       axios
-        .get("http://192.168.0.100:3000/products" || "http://10.20.5.50:3000/products" || "http://127.0.0.1:3000/products")
+        .get("http://127.0.0.1:3000/products")
         .then((res) => res.data)
         .then((res) => {
           res = res.reverse();
@@ -14,9 +14,9 @@ export default {
             return b.id - a.id;
           });
           let uncompletedList = res.filter((el) => !el.completed);
-           uncompletedList.sort((a, b) => {
-             return b.id - a.id;
-           });
+          uncompletedList.sort((a, b) => {
+            return b.id - a.id;
+          });
           //   uncompletedList= uncompletedList.concat(completedList);
           let preTodos = [...uncompletedList, ...completedList];
           //   for (let i = 0; i < preTodos.length; i++) {
@@ -46,14 +46,12 @@ export default {
      onFormSubmitStore(state, newTodo) {
       state.todos.unshift(newTodo);
       for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
-       axios.post("http://192.168.0.100:3000/products" || "http://10.20.5.50:3000/products" || "http://127.0.0.1:3000/products", newTodo);
+       axios.post( "http://127.0.0.1:3000/products", newTodo);
     },
     deleteTodo(state, todo) {
       state.todos = state.todos.filter((el) => el.id !== todo.id);
       for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
-      axios.delete(
-        `http://192.168.0.100:3000/products/${todo._id}` || `http://10.20.5.50:3000/products/${todo._id}` || `http://127.0.0.1:3000/products/${todo._id}`
-      );
+      axios.delete(`http://127.0.0.1:3000/products/${todo._id}`);
     },
     changeTodoStatementStore(state, item) {
       state.todos[item.order - 1].completed = !state.todos[item.order - 1].completed;
@@ -65,10 +63,7 @@ export default {
         state.todos.splice(state.todos.length, 0, sliced);
       }
       for (let i = 0; i < state.todos.length; i++) state.todos[i].order = i + 1;
-      axios.put(
-        `http://192.168.0.100:3000/products/${item._id}` || `http://10.20.5.50:3000/products/${item._id}` || `http://127.0.0.1:3000/products/${item._id}`,
-        item
-      );
+      axios.put(`http://127.0.0.1:3000/products/${item._id}`,item);
     },
     filterList(state, filter) {
       state.filter = filter;
@@ -83,10 +78,7 @@ export default {
       for (let i = 0; i < state.todos.length; i++) {
         if (state.todos[i].id === item.id) state.todos[i].title = item.title;
       }
-      axios.put(
-        `http://192.168.0.100:3000/products/${item._id}` || `http://10.20.5.50:3000/products/${item._id}` || `http://127.0.0.1:3000/products/${item._id}`,
-        item
-      );
+      axios.put(`http://127.0.0.1:3000/products/${item._id}`,item);
     },
   },
   state: {

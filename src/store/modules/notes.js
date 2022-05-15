@@ -4,7 +4,8 @@ export default {
   actions: {
     retriveNotes(ctx) {
       axios
-        .get(`http://192.168.0.100:3000/notes` || "http://10.20.5.50:3000/notes" || "http://127.0.0.1:3000/notes")
+        .get("http://127.0.0.1:3000/notes")
+        // .get(`http://192.168.0.100:3000/notes` || "http://10.20.5.50:3000/notes" || "http://127.0.0.1:3000/notes")
         .then((res) => res.data)
         .then((res) => {
           let veryList = res.filter((el) => el.importance === 1);
@@ -16,8 +17,9 @@ export default {
               return parseInt(b.date.replace("-", "")) - parseInt(a.date.replace("-", ""));
             } else if (parseInt(b.time.replace(":", "")) !== parseInt(a.time.replace(":", ""))) {
               return parseInt(b.time.replace(":", "")) - parseInt(a.time.replace(":", ""));
-            } else { return b.id - a.id }
-
+            } else {
+              return b.id - a.id;
+            }
           }
           veryList.sort(listSorter);
           midList.sort(listSorter);
@@ -47,15 +49,15 @@ export default {
       if (state.newNote.importance === 2) midList.unshift(state.newNote);
       if (state.newNote.importance === 3) lowList.unshift(state.newNote);
       state.notes = [...veryList, ...midList, ...lowList];
-      axios.post(`http://192.168.0.100:3000/notes` || "http://10.20.5.50:3000/notes" || "http://127.0.0.1:3000/notes", state.newNote);
+      axios.post("http://127.0.0.1:3000/notes", state.newNote);
       state.newNote = {};
     },
     deleteNoteFinall(state, note) {
       state.notes = state.notes.filter((el) => el._id != note._id);
-      axios.delete(`http://192.168.0.100:3000/notes/${note._id}` || `http://10.20.5.50:3000/notes/${note._id}` || `http://127.0.0.1:3000/notes/${note._id}`);
+      axios.delete(`http://127.0.0.1:3000/notes/${note._id}`);
     },
     deleteNote(state, note) {
-      axios.put(`http://192.168.0.100:3000/notes/${note._id}` || `http://10.20.5.50:3000/notes/${note._id}` || `http://127.0.0.1:3000/notes/${note._id}`, note);
+      axios.put(`http://127.0.0.1:3000/notes/${note._id}`, note);
     },
     editNotes(state, note) {
       for (let i = 0; i < state.notes; i++) {
@@ -64,7 +66,7 @@ export default {
           state.notes[i].body = note.body;
         }
       }
-      axios.put(`http://192.168.0.100:3000/notes/${note._id}` || `http://10.20.5.50:3000/notes/${note._id}` || `http://127.0.0.1:3000/notes/${note._id}`, note);
+      axios.put(`http://127.0.0.1:3000/notes/${note._id}`, note);
     },
     filterNotes(state, filter) {
       state.filterNote = filter;
@@ -110,11 +112,7 @@ export default {
     removeAll(state) {
       for (let i = 0; i < state.notes.length; i++) {
         if (state.notes[i].isDeleted) {
-          axios.delete(
-            `http://192.168.0.100:3000/notes/${state.notes[i]._id}` ||
-              `http://10.20.5.50:3000/notes/${state.notes[i]._id}` ||
-              `http://127.0.0.1:3000/notes/${state.notes[i]._id}`
-          );
+          axios.delete(`http://127.0.0.1:3000/notes/${state.notes[i]._id}`);
         }
       }
       state.notes = state.notes.filter((el) => !el.isDeleted);
@@ -125,7 +123,7 @@ export default {
           state.notes[i].importance === 3 ? (state.notes[i].importance = 1) : state.notes[i].importance++;
         }
       }
-      axios.put(`http://192.168.0.100:3000/notes/${note._id}` || `http://10.20.5.50:3000/notes/${note._id}` || `http://127.0.0.1:3000/notes/${note._id}`, note);
+      axios.put(`http://127.0.0.1:3000/notes/${note._id}`, note);
     },
     changePosition(state, note) {
       for (let i = 0; i < state.notes.length; i++) {
